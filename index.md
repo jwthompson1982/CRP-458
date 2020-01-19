@@ -25,8 +25,4 @@ James Thompson
 	This is my homepage for LA/CRP 458/558
 	</p>
 
-</head>
-
 </body>
-
-</html>
