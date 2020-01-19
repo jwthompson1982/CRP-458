@@ -1,16 +1,11 @@
 <html>
 
-
-
 <head>
 
+<title>LA/CRP 458/558</title>
 
 
-<title>CRP 458</title>
-
-
-
-<h1>CRP 458 Introduction to Web Mapping</h1>
+<h1>LA/CRP 458/558 Introduction to Web Mapping</h1>
 
 
 
@@ -90,24 +85,7 @@ Here is a link to a web map I recently learned how to make in my CRP 251 class
 
 
 
-	
-
-
 
 	</p>
 
-
-
-
-
-
-
-</head>
-
-
-
 </body>
-
-
-
-</html>
