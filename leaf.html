@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+
+    <meta name="description" content="LA/CRP 458/558 Leaflet starter file - 2020">
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width">
+
+    <title>Greenwood Historic Neighborhood</title>
+<h1>Fun Spots in The Greenwood Historc Neighborhood</h1>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+
+        crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+
+        crossorigin=""></script>
+
+
+
+    <style>
+
+        #map {
+
+            width: 700px;
+
+            height: 500px;
+            
+            background: black;
+        }
+
+        
+
+    </style>
+    
+
+    
+
+</head>
+
+
+
+<body>
+<div id='map'></div>
+    
+
+
+
+    <script>
+
+        var map = L.map('map').setView([41.579444, -93.671389 ], 15);
+
+
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+
+            maxZoom: 19,
+
+            id: 'mapbox/streets-v11',
+
+
+            accessToken: 'pk.eyJ1IjoiYmNyYXQiLCJhIjoiY2s2cHB2cjNzMGNnNzNtcDd3eXdvMmQwcSJ9.P3u0JhcLyYF-6PJDr4gSzA' 
+
+        }).addTo(map);
+
+//Original location code:
+
+  //      L.marker([41.579444, -93.671389 ]).addTo(map)
+
+  //          .bindPopup("The Historic Salisbury House")
+
+  //         .openPopup();
+//Greenwood:spot to get some sun in the spring 41.580210, -93.681557
+//         L.marker([41.580210, -93.681557]).addTo(map) 
+        
+ //           .bindPopup("A Great Place to Get Some <br> Sun After a Long Winter!!")
+
+   //         .openPopup();
+        
+     //   L.marker([41.582488, -93.681380]).addTo(map) 
+        
+       //     .bindPopup("Rose Garden")
+
+         //   .openPopup();
+        
+        //Good hammock spot :-) 41.580561, -93.683268
+        
+    //    L.marker([41.580232, -93.682860]).addTo(map) 
+        
+      //      .bindPopup("A Good Hammock Spot :-)")
+
+        //    .openPopup();
+        
+        
+        //add array to replace old location code
+
+        
+
+    </script>
+    <script>
+var coolSpots = [
+    [41.579444, -93.671389,  "The Historic Salisbury House"],
+    [41.580210, -93.681557, "A Great Place to Get Some <br> Sun After a Long Winter!!"],
+    [41.582488, -93.681380,  "Rose Garden"],
+    [41.580561, -93.683268,  "A Good Hammock Spot :-)"]   
+];
+        
+        //Loop through array
+        //!!Warning!! Realize the i++ after length is in reference to the number of comma seperated values(3 in this case,lat,long,"name") within each of the four coolSpots
+for (var i = 0; i <coolSpots.length; i++) {marker = new L.marker([coolSpots[i][0],coolSpots[i][1]])
+.bindPopup(coolSpots[i][2]) 
+.addTo(map)
+.openPopup();                                           }
+        //------------------Links below map----------
+        
+        //Art Center
+        function artCenter() {
+            map.setView([41.583955, -93.681087 ], 22);
+        }
+             function waterWorks() {
+            map.setView([41.569647, -93.660334 ], 15);
+        }
+         function greenWood() {
+            map.setView([41.578828, -93.681682 ], 15);
+        }
+    </script>
+<a href="javascript:artCenter()">Art Center
+    </a>
+<br>
+<br>
+    <a href="javascript:waterWorks()">Water Works Park
+    </a>
+    <br>
+<br>
+    <a href="javascript:greenWood()">Greenwood Park
+    </a>
+    
+</body>
+
+</html>
