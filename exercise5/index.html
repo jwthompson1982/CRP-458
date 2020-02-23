@@ -13,7 +13,9 @@
     <meta name="viewport" content="width=device-width">
 
     <title>Greenwood Historic Neighborhood</title>
-<h1>Fun Spots in The Greenwood Historc Neighborhood</h1>
+<h1>Fun Spots in The Greenwood Historic Neighborhood</h1>
+    
+     <a href="../exercise1/index.html">Return to Homepage</a>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -44,15 +46,26 @@
     </style>
     
 
-    
-
+  
 </head>
 
 
 
 <body>
+    
 <div id='map'></div>
     
+<a href="javascript:artCenter()">Art Center
+    </a>
+<br>
+<br>
+    <a href="javascript:waterWorks()">Water Works Park
+    </a>
+    <br>
+<br>
+    <a href="javascript:greenWood()">Greenwood Park
+    </a>
+        
 
 
 
@@ -108,8 +121,7 @@
 
         
 
-    </script>
-    <script>
+
 var coolSpots = [
     [41.579444, -93.671389,  "The Historic Salisbury House"],
     [41.580210, -93.681557, "A Great Place to Get Some <br> Sun After a Long Winter!!"],
@@ -121,10 +133,10 @@ var coolSpots = [
         //!!Warning!! Realize the i++ after length is in reference to the number of comma seperated values(3 in this case,lat,long,"name") within each of the four coolSpots
 for (var i = 0; i <coolSpots.length; i++) {marker = new L.marker([coolSpots[i][0],coolSpots[i][1]])
 .bindPopup(coolSpots[i][2]) 
-.addTo(map)
-.openPopup();                                           }
+.addTo(map);
+ 
+                                          }
         //------------------Links below map----------
-        
         //Art Center
         function artCenter() {
             map.setView([41.583955, -93.681087 ], 22);
@@ -136,17 +148,31 @@ for (var i = 0; i <coolSpots.length; i++) {marker = new L.marker([coolSpots[i][0
             map.setView([41.578828, -93.681682 ], 15);
         }
     </script>
-<a href="javascript:artCenter()">Art Center
-    </a>
-<br>
-<br>
-    <a href="javascript:waterWorks()">Water Works Park
-    </a>
-    <br>
-<br>
-    <a href="javascript:greenWood()">Greenwood Park
-    </a>
     
+  <!---------------------------------------- --> 
+    <!--Copy from here to end of div to add nav to each page --> 
+    <br>
+    <br>
+    <link  rel="stylesheet" type="text/css" href="css.css">
+    <script src="java.js"></script>
+<a style="background-color: forestgreen" href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
+    
+    <!--Below is my side navbar to use on each page.  Edit for each page as neccesary-->
+   <div id="mySidenav" class="sidenav">
+       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      
+  <ol><br>
+    
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise2/">Philmont Scout Ranch</a></li>
+      
+      <li><a target="_blank" href="https://github.com/jwthompson1982/CRP-458/blob/master/exercise3/IA_CAFOs.geojson">Locations of CAFOs in Iowa</a></li>
+      
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise4/#9/41.4989/-93.6840">Cities of Central Iowa with Des Moines Fire Stations</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/assignment1/index.html">Assignment 1: HTML and Javascript</a></li>
+        </ol>
+  
+    </div>  
+<!---------------------------------------- -->
 </body>
 
 </html>
