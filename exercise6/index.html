@@ -82,7 +82,8 @@
     fillColor: 'clear',
     fillOpacity: 0,
     radius: 100
-}).addTo(map);
+}).addTo(map)
+        .bindPopup("Campground");
         
   var polygon = L.polygon([
     [41.537708, -93.730983],
@@ -107,8 +108,19 @@
     fillOpacity: 0,
     radius: 100
 }).addTo(map)
-        circle.bindPopup("Bridge Site?")
+        circle.bindPopup("Future Bridge Site?")
         .openPopup();
+        
+         var cm1 = new L.circleMarker([41.547153, -93.729567],{ 
+             radius: 20, 
+             stroke: true, 
+             color: 'black',
+             opacity: 1, 
+             weight: 1,  
+             fill: true, 
+             fillColor: "green",  
+             fillOpacity: 0.3 
+         }).addTo(map);
     </script>
     
   <!---------------------------------------- --> 
