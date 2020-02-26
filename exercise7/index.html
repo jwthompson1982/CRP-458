@@ -99,6 +99,20 @@
 	maxZoom: 16,
 	ext: 'jpg'
 });
+//Markers etc.
+     //  var marker = L.marker([63.447037, 10.883221]).addTo(map).bindPopup('Trondheim Fjord');
+        
+        var polygon = L.polygon([
+    [63.440184, 10.873873],
+    [63.444137, 10.868551],
+    [63.448741, 10.891039],
+    [63.448094, 10.901167],
+	[63.443062, 10.923655]
+],{
+    color: 'black',
+    fillColor: 'red',
+    fillOpacity: .36663
+});
 
         
         
@@ -108,22 +122,30 @@
 	accessToken: 'pk.eyJ1IjoiYmNyYXQiLCJhIjoiY2s2cHB2cjNzMGNnNzNtcDd3eXdvMmQwcSJ9.P3u0JhcLyYF-6PJDr4gSzA',
 	maxZoom: 22
 }).addTo(map);
-     */   
-        //Create map
-             var map = L.map('map',{
+     */  
+        
+    //Create map
+        var map = L.map('map',{
     center: [63.445004, 10.902229],
     zoom: 14,
     layers: [Esri_WorldImagery, Stamen_Watercolor]
     });
-        
+     
+    //marker--  This won't work unless it is BELOW the variable 'map'  --
+        var fjord = L.marker([63.447037, 10.883221]).addTo(map).bindPopup('Trondheim Fjord'),
+            hell = L.marker([63.445617, 10.905642]).addTo(map).bindPopup('Hell, Norway');
    //layer control
 		var baseMaps = {
-			"Metal Basemap": metal,
+			"The devil's Basemap": metal,
             "Esri World Imagery": Esri_WorldImagery,
 			"Stamen Watercolor": Stamen_Watercolor
         };
         
-     L.control.layers(baseMaps).addTo(map);   
+        var overlayMaps = {
+			"Find The Limits of Hell": polygon,
+        };
+        
+     L.control.layers(baseMaps, overlayMaps).addTo(map);   
     </script>
     
   <!---------------------------------------- --> 
