@@ -35,9 +35,9 @@
 
         #map {
 
-            width: 700px;
+            width: 800px;
 
-            height: 500px;
+            height: 666px;
             
             background: red;
         }
@@ -58,38 +58,17 @@
 
 
     <script>
-    /*    Map from exercise 6
-    
- var map = L.map('map').setView([41.541520, -93.740832 ], 15.4);
-    
- --   openstreet map  --
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', 
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-}).addTo(map);
-       
-      --  Basemap from exercise 6  --
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-
-            maxZoom: 19,
-
-            id: 'mapbox/streets-v11',
-
-
-            accessToken: 'pk.eyJ1IjoiYmNyYXQiLCJhIjoiY2s2cHB2cjNzMGNnNzNtcDd3eXdvMmQwcSJ9.P3u0JhcLyYF-6PJDr4gSzA' 
         
-        */
-        
-    
+    var OSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+});
         
     var metal = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-      
+    }); 
         
-        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
         var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
@@ -111,24 +90,15 @@
 ],{
     color: 'black',
     fillColor: 'red',
+            //Satan's opacity LOL
     fillOpacity: .36663
 });
 
-        
-        
-       /*  sAtAn's basemap!  L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
-	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            
-	accessToken: 'pk.eyJ1IjoiYmNyYXQiLCJhIjoiY2s2cHB2cjNzMGNnNzNtcDd3eXdvMmQwcSJ9.P3u0JhcLyYF-6PJDr4gSzA',
-	maxZoom: 22
-}).addTo(map);
-     */  
-        
     //Create map
         var map = L.map('map',{
     center: [63.445004, 10.902229],
     zoom: 14,
-    layers: [Esri_WorldImagery, Stamen_Watercolor]
+    layers: [Esri_WorldImagery]
     });
      
     //marker--  This won't work unless it is BELOW the variable 'map'  --
@@ -136,13 +106,14 @@
             hell = L.marker([63.445617, 10.905642]).addTo(map).bindPopup('Hell, Norway');
    //layer control
 		var baseMaps = {
-			"The devil's Basemap": metal,
             "Esri World Imagery": Esri_WorldImagery,
+            "OpenStreetMap": OSM,
 			"Stamen Watercolor": Stamen_Watercolor
         };
         
         var overlayMaps = {
 			"Find The Limits of Hell": polygon,
+            "The devil's Basemap": metal
         };
         
      L.control.layers(baseMaps, overlayMaps).addTo(map);   
@@ -168,6 +139,8 @@
       
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise4/#9/41.4989/-93.6840">Cities of Central Iowa with Des Moines Fire Stations</a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/assignment1/index.html">Assignment 1: HTML and Javascript</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise5/">Getting Started with Leaflet.js</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise6/">Leaflet.js Vector Layers</a></li>
         </ol>
   
     </div>  
