@@ -63,6 +63,13 @@
     var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
+//  Attempting to make layer control work here.  Activating this makes everything but the basemap disapear.
+
+     var stuff = L.geoJson(lakes, statesData);
+        
+   //   var statesData = L.polygon('../geoJson_directory/usa.geojson);
+       
+        
 
       
     //Create map
@@ -71,6 +78,7 @@
     zoom: 5,
     layers: [Esri_WorldImagery]
     });
+        
         
 //-----begin Bailey's pop density code--------------
         	function getColor(d) {
@@ -193,19 +201,18 @@
         
 //layer control-----------------------   
         
-         var baseMaps = {
+        var baseMaps = {
             "Esri World Imagery": Esri_WorldImagery};
       
         var overlay = {
 			"The Great Lakes": lakes,
             "States": statesData};
 //I thought this was how to add the lakes to the layer control...
-        var geoJSON = {
-            "The Great Lakes": lakes,
-            "States": statesData
-        };
+    //   var geoJson = {
+    //        "The Great Lakes": lakes,
+    //        "States": statesData};
         
-      L.control.layers(overlay, baseMaps, geoJSON).addTo(map);
+     L.control.layers(stuff, baseMaps).addTo(map);
 /*
 ------------original code-----------------------
         L.geoJSON(lakes, statesData).addTo(map); 
@@ -245,6 +252,7 @@
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise5/">Getting Started with Leaflet.js</a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise6/">Leaflet.js Vector Layers</a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise7/">Leaflet.js Layer Control - Multiple Layers and Basemaps </a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise8/">Leaflet.js GeoJSON Layers</a></li>
         </ol>
   
     </div>  
