@@ -187,6 +187,8 @@
 
 	}).addTo(map);
         
+//End Bailey's pop density code---------------
+        
         L.geoJSON(lakes).addTo(map);
         
 //layer control-----------------------   
@@ -204,38 +206,7 @@
         };
         
       L.control.layers(overlay, baseMaps, geoJSON).addTo(map);
-        
-        	// get color based on total state population.  I tried to use counties near the great lakes, but the files was MASSIVE, and barely loaded!
-
-/*	function getColor(d) {
-
-		return d > 13000000 ? '#253494' :
-
-				d > 9900000  ? '#2c7fb8' :
-
-				d > 6600000  ? '#41b6c4' :
-
-				d > 5400000   ? '#7fcdbb' 
-
-	};
-function style(feature) {
-
-		return {
-
-			weight: 1,
-
-			opacity: 1,
-
-			color: 'white',
-
-			fillOpacity: 0.7,
-
-			fillColor: getColor(feature.properties.density)
-
-		};
-
-	}
-
+/*
 ------------original code-----------------------
         L.geoJSON(lakes, statesData).addTo(map); 
     
@@ -251,7 +222,7 @@ function style(feature) {
 */       
     </script>
     
-  <!---------------------------------------- --> 
+  
     <!--Copy from here to end of div to add nav to each page --> 
     <br>
     <br>
