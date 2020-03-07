@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
 
 
-
-<head>
-
-
-    <meta charset="utf-8">
-
-    <meta name="viewport" content="width=device-width">
-
-    <title>Great Lakes & US Population</title>
+<!--	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	  
+	<script src="https://profseeger.github.io/LVM-Code/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+-->	  <title>Great Lakes & US Population</title>
     
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 
@@ -46,19 +42,52 @@
         
 
     </style>
-    
+ <!-- CSS     <style id="jsbin-css">
 
-  
+#map { height: 500px; margin: 0; padding: 0; }
+
+
+.legend {
+    line-height: 10px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+End CSS  -->
+/*
+box-shadow: none|h-shadow v-shadow blur spread color |inset|initial|inherit;
+
+https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
+
+*/
+</style>
 </head>
-
-
-
-<body>
     
-<div id='map'></div>
+    
+    
+  <body>
+<div id="map"></div>
+
+<script>
 
 
-    <script>
         
     var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -71,7 +100,6 @@
     zoom: 5,
     layers: [Esri_WorldImagery]
     });
-        
 //-----begin Bailey's pop density code--------------
         	function getColor(d) {
 
@@ -188,69 +216,75 @@
 	}).addTo(map);
         
 //End Bailey's pop density code---------------
-        
-        L.geoJSON(lakes).addTo(map);
-        
-//layer control-----------------------   
-        
-         var baseMaps = {
-            "Esri World Imagery": Esri_WorldImagery};
-      
-        var overlay = {
-			"The Great Lakes": lakes,
-            "States": statesData};
-//I thought this was how to add the lakes to the layer control...
-        var geoJSON = {
-            "The Great Lakes": lakes,
-            "States": statesData
-        };
-        
-      L.control.layers(overlay, baseMaps, geoJSON).addTo(map);
-/*
-------------original code-----------------------
-        L.geoJSON(lakes, statesData).addTo(map); 
-    
-        //layer controls
-        var baseMaps = {
-            "Esri World Imagery": Esri_WorldImagery};
-      
-        var overlay = {
-			"The Great Lakes": lakes,
-            "States": statesData};
-        
-      L.control.layers(overlay, baseMaps).addTo(map);
-*/       
-    </script>
-    
-  
-    <!--Copy from here to end of div to add nav to each page --> 
-    <br>
-    <br>
-    <link  rel="stylesheet" type="text/css" href="css.css">
-    <script src="java.js"></script>
-<a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
-    
-    <!--Below is my side navbar to use on each page.  Edit for each page as neccesary-->
-   <div id="mySidenav" class="sidenav">
-       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      
-  <ol><br>
-    
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise2/">Philmont Scout Ranch</a></li>
-      
-      <li><a target="_blank" href="https://github.com/jwthompson1982/CRP-458/blob/master/exercise3/IA_CAFOs.geojson">Locations of CAFOs in Iowa</a></li>
-      
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise4/#9/41.4989/-93.6840">Cities of Central Iowa with Des Moines Fire Stations</a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/assignment1/index.html">Assignment 1: HTML and Javascript</a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise5/">Getting Started with Leaflet.js</a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise6/">Leaflet.js Vector Layers</a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise7/">Leaflet.js Layer Control - Multiple Layers and Basemaps </a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise8/">Leaflet.js GeoJSON Layers</a>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise9/">Leaflet.js Choropleth Map</a>
-        </ol>
-  
-    </div>  
-<!---------------------------------------- -->
-</body>
 
-</html>   
+//set color of marker
+function getColor(d) {
+  return d > 1000 ? '#253494' :
+    d > 500 ? "#2c7fb8" :
+   d > 200 ? "#41b6c4" :
+    d > 100 ? "#7fcdbb" :
+    d > 50 ? "#c7e9b4" :
+   '#ffffcc';
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.density),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.7
+    };
+}
+
+/*
+url = "https://profseeger.github.io/LVM-Code/data/geoJSON/iowaCounties.geojson";
+
+var geojsonLayer = new L.GeoJSON.AJAX(url , {
+	style: style,
+	onEachFeature: function (feature, layer) {
+        htmlText = "<strong>" + feature.properties.NAME+ "</strong><br>Population 2010: <b>"  + feature.properties.POP2010 + "</b><br>Population 2000: <b>"  + feature.properties.POP2000 + "</b><br> RUCC 2013: <b>"  + feature.properties.RUCC_2013 + "</b>";
+        layer.bindPopup(htmlText);
+		layer.bindTooltip(feature.properties.NAME);
+    }
+}).addTo(map);
+*/
+
+
+	
+	
+	L.geoJSON(lakes).addTo(map);
+	
+//Create Legend
+var legend = L.control({
+  position: 'bottomleft'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    density = [1000, 500, 200,100 ,50],
+    labels = ['Dense', ' ', ' ', ' ', 'Sparse'];
+
+	
+	//console.log(feature.length);
+	
+	 div.innerHTML += "<b>Pop Density</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < density.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(density[i] ) + ' "></i> ' +
+      density[i] +' '+ labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+
+
+</script>
+      <link  rel="stylesheet" type="text/css" href="css.css">
+</body>
+</html>
