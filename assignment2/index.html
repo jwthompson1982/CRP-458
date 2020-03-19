@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<!-- Leaflet and GeoJson info  -->
+    <head>
+    <title>Natural Areas and US Suicides</title>  
+    
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+
+        crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+
+    crossorigin=""></script>
+    
+    <h2> US Suicides and Natural Areas</h2>
+    
+     <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
+        <br>
+        <script src="geojson&images/Us_Suicides_by_State.geojson"></script>
+        
+        <style>
+        #map {
+            width: 800px;
+            height: 700px;   
+            background: black;
+        }
+        </style>
+        
+        
+    </head>
+    
+        <body>
+            
+            <div id="map"></div>
+            
+                <script>
+
+                var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+      
+                    //Create map
+                var map = L.map('map',{
+                center: [41.822071, -98.335329],
+                zoom: 4,
+                layers: [Esri_WorldImagery]
+    });
+                
+                function getColor(d) {
+		        return 
+                d > 0.23 ? '#253494' :
+				d > 0.19  ? '#2c7fb8' :
+				d > 0.15  ? '#41b6c4' :
+				d > 0.11  ? '#7fcdbb' :
+				d > 0.02   ? '#c7e9b4' :
+							'#ffffcc';
+	}
+//The "feature" command may be wrong.  I'm not sure how to match it up with it's geojson.  features, Feature....???  I've tried multiple options.
+	           function style(Feature) {
+		       return {
+			   weight: 1,
+			   opacity: 1,
+			   color: 'white',
+			   fillOpacity: 0.7,
+			   fillColor: getColor(Feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000)
+		};
+	}
+
+	           function highlightFeature(e) {
+		       var layer = e.target;
+		      layer.setStyle({
+			  weight: 2,
+			  color: 'black',
+			  dashArray: '',
+			  fillOpacity: 0.7
+		});
+
+		      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			  layer.bringToFront();
+		}
+	}
+	          var geojson;
+	         function resetHighlight(e) {
+		     geojson.resetStyle(e.target);
+	}
+
+	         function zoomToFeature(e) {
+		     map.fitBounds(e.target.getBounds());
+	}
+
+	/*---------------------------------------
+    function onEachFeature(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: zoomToFeature
+		});
+	}
+    ---------------------------------------------*/
+
+	geojson = L.geoJson(suicides, {
+		style: style,
+		onEachFeature: onEachFeature
+	}).addTo(map);
+
+
+//set color of legend
+function getColor(d) {
+  return d > 0.23 ? '#253494' :
+    d > 0.19 ? "#2c7fb8" :
+   d > 0.15 ? "#41b6c4" :
+    d > 0.11 ? "#7fcdbb" :
+    d > 0.02 ? "#c7e9b4" :
+   '#ffffcc';
+}
+
+function style(Feature) {
+    return {
+        fillColor: getColor(Feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.7
+    };
+}
+
+	L.geoJSON(suicides).addTo(map);
+	
+//Create Legend
+var legend = L.control({
+  position: 'bottomleft'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    density = [0.23, 0.19, 0.15,0.11 ,0.02],
+    labels = ['High', ' ', ' ', ' ', 'Lower'];
+
+	
+	//console.log(feature.length);
+	
+	 div.innerHTML += "<b>Crude Suicide Rate</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < USsuicidesByState2016jwtEdit_CrudeRatePer1000.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(USsuicidesByState2016jwtEdit_CrudeRatePer1000[i] ) + ' "></i> ' +
+      density[i] +' '+ labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+    
+            </script>
+            
+            
+        <link  rel="stylesheet" type="text/css" href="css.css">
+        <script src="java.js"></script>
+        <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
+            
+        <!--Below is my side navbar to use on each page.  Edit for each page as neccesary-->
+        <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+       
+        <ol><br>
+    
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise2/">Philmont Scout Ranch</a></li>
+      <li><a target="_blank" href="https://github.com/jwthompson1982/CRP-458/blob/master/exercise3/IA_CAFOs.geojson">Locations of CAFOs in Iowa</a></li> 
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise4/#9/41.4989/-93.6840">Cities of Central Iowa with Des Moines Fire Stations</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/assignment1/index.html">Assignment 1: HTML and Javascript</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise5/">Getting Started with Leaflet.js</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise6/">Leaflet.js Vector Layers</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise7/">Leaflet.js Layer Control - Multiple Layers and Basemaps </a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise8/">Leaflet.js GeoJSON Layers</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise9/"> Leaflet.js Choropleth Map</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise10/"> Leaflet Map with Legend</a></li>
+        </ol>
+       </div>  
+<!---------------------------------------- -->
+        </body>
+</html>
