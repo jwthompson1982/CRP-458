@@ -60,14 +60,14 @@
 				d > 0.02   ? '#c7e9b4' :
 							'#ffffcc';
 	}
-//The "feature" command may be wrong.  I'm not sure how to match it up with it's geojson.  features, Feature....???  I've tried multiple options.
-	           function style(Feature) {
+
+	           function style(feature) {
 		       return {
 			   weight: 1,
 			   opacity: 1,
 			   color: 'white',
 			   fillOpacity: 0.7,
-			   fillColor: getColor(Feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000)
+			   fillColor: getColor(feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000)
 		};
 	}
 
@@ -86,14 +86,14 @@
 	}
 	          var geojson;
 	         function resetHighlight(e) {
-		     geojson.resetStyle(e.target);
+		    geojson.resetStyle(e.target);
 	}
 
 	         function zoomToFeature(e) {
 		     map.fitBounds(e.target.getBounds());
 	}
 
-	/*---------------------------------------
+	
     function onEachFeature(feature, layer) {
 		layer.on({
 			mouseover: highlightFeature,
@@ -101,7 +101,7 @@
 			click: zoomToFeature
 		});
 	}
-    ---------------------------------------------*/
+    
 
 	geojson = L.geoJson(suicides, {
 		style: style,
@@ -119,9 +119,9 @@ function getColor(d) {
    '#ffffcc';
 }
 
-function style(Feature) {
+function style(feature) {
     return {
-        fillColor: getColor(Feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000),
+        fillColor: getColor(feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000),
         weight: 1,
         opacity: 1,
         color: 'white',
@@ -144,16 +144,18 @@ legend.onAdd = function(map) {
     density = [0.23, 0.19, 0.15,0.11 ,0.02],
     labels = ['High', ' ', ' ', ' ', 'Lower'];
 
-	
-	//console.log(feature.length);
+	// Do I need to change length to value, or some other word?
+	console.log(feature.length);
 	
 	 div.innerHTML += "<b>Crude Suicide Rate</b><br>";
-  // loop through items and generate a label with a colored square for each
+   // loop through items and generate a label with a colored square for each
+  
   for (var i = 0; i < USsuicidesByState2016jwtEdit_CrudeRatePer1000.length; i++) {
     div.innerHTML +=
-      '<i style="background:' + getColor(USsuicidesByState2016jwtEdit_CrudeRatePer1000[i] ) + ' "></i> ' +
-      density[i] +' '+ labels[i]+'<br>';
+      '<i style="background:' + getColor(USsuicidesByState2016jwtEdit_CrudeRatePer1000[i]) + ' "></i> ' +
+      USsuicidesByState2016jwtEdit_CrudeRatePer1000[i];
   }
+
 
   return div;
 };
