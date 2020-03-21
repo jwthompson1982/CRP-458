@@ -16,7 +16,7 @@
 
     crossorigin=""></script>
     
-    <h2> US Suicides and Natural Areas</h2>
+    <h2> US Suicide rates by State and Natural Areas</h2>
     
      <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
@@ -38,19 +38,34 @@
             <div id="map"></div>
             
                 <script>
-
+//basemaps
                 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
+                var OSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18
+});
       
-                    //Create map
+                    var polygon = L.polygon([geojson])
+                    
+//Create map
                 var map = L.map('map',{
                 center: [41.822071, -98.335329],
                 zoom: 4,
                 layers: [Esri_WorldImagery]
     });
-                
+//layer control
+		var baseMaps = {
+            "Esri World Imagery": Esri_WorldImagery,
+            "OpenStreetMap": OSM
+             };
+//National parks control                    
+        var overlayMaps = {
+            "US Suicide Rates": geojson};
+	//		"US National Parks": polygon,
+      //  };
                 function getColor(d) {
 		        return 
                 d > 0.23 ? '#253494' :
@@ -101,15 +116,19 @@
 			click: zoomToFeature
 		});
 	}
-    
-
+//trying to figure out how to use national parks geojson
+  /*  parks = L.geoJson(nationalParks, {
+		style: style,
+		onEachFeature: onEachFeature
+	}).addTo(map);
+*/
 	geojson = L.geoJson(suicides, {
 		style: style,
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
 
-//set color of legend
+//Color of legend
 function getColor(d) {
   return d > 0.23 ? '#253494' :
     d > 0.19 ? "#2c7fb8" :
@@ -135,35 +154,36 @@ function style(feature) {
 //Create Legend
 var legend = L.control({
   position: 'bottomleft'
-	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
 });
 
 legend.onAdd = function(map) {
 
   var div = L.DomUtil.create('div', 'info legend'),
     density = [0.23, 0.19, 0.15,0.11 ,0.02],
-    labels = ['High', ' ', ' ', ' ', 'Lower'];
+    labels = ['Higher', ' ', ' ', ' ', 'Lower'];
 
-	// Do I need to change length to value, or some other word?
-	console.log(feature.length);
+	
+	//console.log(feature.length);
 	
 	 div.innerHTML += "<b>Crude Suicide Rate</b><br>";
-   // loop through items and generate a label with a colored square for each
-  
-  for (var i = 0; i < USsuicidesByState2016jwtEdit_CrudeRatePer1000.length; i++) {
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < density.length; i++) {
     div.innerHTML +=
-      '<i style="background:' + getColor(USsuicidesByState2016jwtEdit_CrudeRatePer1000[i]) + ' "></i> ' +
-      USsuicidesByState2016jwtEdit_CrudeRatePer1000[i];
+      '<i style="background:' + getColor(density[i] ) + ' "></i> ' +
+      density[i] +' '+ labels[i]+'<br>';
   }
-
 
   return div;
 };
 legend.addTo(map);
+                    
+ L.control.layers(baseMaps).addTo(map);
     
             </script>
-            
-            
+                <p>
+                    <a target="_blank" href="geojson&images/BeedsAtSunset.jpg">Click here</a> to see a place that has improved my mental health :-)
+                </p>
+                <br>
         <link  rel="stylesheet" type="text/css" href="css.css">
         <script src="java.js"></script>
         <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
@@ -187,5 +207,7 @@ legend.addTo(map);
         </ol>
        </div>  
 <!---------------------------------------- -->
+            <p>Mortality data obtained from: <a target="_blank" href="https://wonder.cdc.gov/ucd-icd10.html"> CDC WONDER</a>
+            </p>
         </body>
 </html>
