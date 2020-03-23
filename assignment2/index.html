@@ -10,12 +10,21 @@
 
         crossorigin=""/>
 
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
 
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 
-    crossorigin=""></script>
+crossorigin="">
+</script>
     
+        <!--Load in Heat plugin -->
+<script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js">
+</script>
+        
+        <!--JQuery JS Library-->
+<script src="https://code.jquery.com/jquery-3.1.0.js">
+</script>
+        
     <h2> US Suicide rates by State and Natural Areas</h2>
     
      <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
@@ -47,7 +56,13 @@
                 attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 18
 });
-      
+   
+            //---------Heat Map Command------------
+     $.getJSON("geojson&images/USA_Parks.geojson", function(data) {
+     var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
+     var heat = L.heatLayer(coords).addTo(map); //all default options - customizable options below
+});
+                    
                     var polygon = L.polygon([geojson])
                     
 //Create map
@@ -110,11 +125,13 @@
 
 	
     function onEachFeature(feature, layer) {
-		layer.on({
+		layer.bindPopup(feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000);
+        ({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
 			click: zoomToFeature
-		});
+		})
+            ;
 	}
 //trying to figure out how to use national parks geojson
   /*  parks = L.geoJson(nationalParks, {
@@ -125,7 +142,7 @@
 	geojson = L.geoJson(suicides, {
 		style: style,
 		onEachFeature: onEachFeature
-	}).addTo(map);
+	}).addTo(map).bindPopup(feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000);
 
 
 //Color of legend
@@ -148,9 +165,8 @@ function style(feature) {
         fillOpacity: 0.7
     };
 }
-
-	L.geoJSON(suicides).addTo(map);
-	
+	L.geoJSON(suicides).addTo(map).bindPopup(feature.properties.USsuicidesByState2016jwtEdit_CrudeRatePer1000);
+                    
 //Create Legend
 var legend = L.control({
   position: 'bottomleft'
