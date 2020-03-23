@@ -58,7 +58,7 @@ crossorigin="">
                 maxZoom: 18
 });
    
-            //---------Heat Map Command------------
+      /*      //---------Original Heat Map Command------------
      $.getJSON("https://jwthompson1982.github.io/CRP-458/assignment2/geojson&images/USA_Parks.geojson", function(data) {
      var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
      var heat = L.heatLayer(coords, {
@@ -74,6 +74,10 @@ crossorigin="">
         }
     }).addTo(map)
 });
+  */     
+     
+
+
                     
            //         var polygon = L.polygon([geojson])
                     
@@ -92,7 +96,7 @@ crossorigin="">
                     
         var overlayMaps = {
             "US Suicide Rates": geojson,
-            "Parks": heat
+            "Parks": heatMap
         };
 	
                 function getColor(d) {
@@ -210,7 +214,35 @@ legend.onAdd = function(map) {
 
   return div;
 };
+                    
+                    
 legend.addTo(map);
+                    
+                                    //--Second Heat Map Commands---
+
+var heatMap = $.ajax({
+        type: 'GET',
+        url: 'https://jwthompson1982.github.io/CRP-458/assignment2/geojson&images/USA_Parks.geojson',
+        dataType: 'json',
+        success: function() { },
+        data: {},
+        async: false
+    });
+//console.log(heatMap.responseJSON);   
+var coords = heatMap.responseJSON.features.map(feat => feat.geometry.coordinates.slice().reverse())
+     
+var heat = new L.HeatLayer(coords, {
+  minOpacity: 0.3, //the minimum opacity the heat will start at
+  maxZoom: 17, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
+  max: 1.0, //maximum point intensity, 1.0 by default
+  radius: 10, //radius of each "point" of the heatmap, 25 by default
+  blur: 7, //amount of blur, 15 by default
+  gradient: {
+    0.185: 'green',
+    0.21: 'yellow',
+    0.98: 'red'
+  }
+}).addTo(map)  
                     
  L.control.layers(baseMaps, overlayMaps).addTo(map);
                     
