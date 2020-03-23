@@ -58,7 +58,7 @@ crossorigin="">
 });
    
             //---------Heat Map Command------------
-     $.getJSON("geojson&images/USA_Parks.geojson", function(data) {
+     $.getJSON("https://jwthompson1982.github.io/CRP-458/assignment2/geojson&images/USA_Parks.geojson", function(data) {
      var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
      var heat = L.heatLayer(coords).addTo(map); //all default options - customizable options below
 });
