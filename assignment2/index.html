@@ -25,8 +25,9 @@ crossorigin="">
 <script src="https://code.jquery.com/jquery-3.1.0.js">
 </script>
         
-    <h2> US Suicide Rates by State and Natural Areas</h2>
+    <h2> US Suicide Rates by State and Natural Areas (Parks)</h2>
         <h3>Natural Areas Can Improve Mood</h3>
+        <p style="font-size: 18">This is just my opinion, but I am a strong believer in the power of natural areas such as parks in improving mood, lowering strees and depression, and increasing happiness.  I know I am not alone in this thought.  Please zoom in to this map.  I am not trying to say this is conclusive evidence, but I can't help but  notice, that in some(not all) areas, when there is a higher concentration of parks, the crude suicide rate is lower. <b> Please take a look and draw your own conclusions.</b> </p>
     
      <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
@@ -57,7 +58,7 @@ crossorigin="">
                 attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 18
 });
-   
+     
       /*      //---------Original Heat Map Command------------
      $.getJSON("https://jwthompson1982.github.io/CRP-458/assignment2/geojson&images/USA_Parks.geojson", function(data) {
      var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
@@ -79,7 +80,7 @@ crossorigin="">
 
 
                     
-           //         var polygon = L.polygon([geojson])
+                   var polygon = L.polygon([geojson])
                     
 //Create map
                 var map = L.map('map',{
@@ -87,7 +88,8 @@ crossorigin="">
                 zoom: 4,
                 layers: [Esri_WorldImagery]
     });
-                    
+      
+                  
 //layer control
 		var baseMaps = {
             "Esri World Imagery": Esri_WorldImagery,
@@ -95,9 +97,10 @@ crossorigin="">
              };
                     
         var overlayMaps = {
-            "US Suicide Rates": geojson,
+            "US Suicide Rates": polygon,
             "Parks": heatMap
         };
+                  
 	
                 function getColor(d) {
 		        return 
@@ -217,8 +220,8 @@ legend.onAdd = function(map) {
                     
                     
 legend.addTo(map);
-                    
-                                    //--Second Heat Map Commands---
+                     
+         //--Second Heat Map Commands---
 
 var heatMap = $.ajax({
         type: 'GET',
@@ -243,8 +246,9 @@ var heat = new L.HeatLayer(coords, {
     0.98: 'red'
   }
 }).addTo(map)  
-                    
- L.control.layers(baseMaps, overlayMaps).addTo(map);
+ 
+//When I add overlayMaps to control layer below, I loose the whole control box.  Why is this not adding the overlay layers??
+ L.control.layers(baseMaps).addTo(map); 
                     
     
             </script>
@@ -275,7 +279,8 @@ var heat = new L.HeatLayer(coords, {
         </ol>
        </div>  
 <!---------------------------------------- -->
-            <p>Mortality data obtained from: <a target="_blank" href="https://wonder.cdc.gov/ucd-icd10.html"> CDC WONDER</a>
+            <p>Mortality data obtained from: <a target="_blank" href="https://wonder.cdc.gov/ucd-icd10.html"> CDC WONDER</a><br><br>
+                Heat map derived from a polygon feature class from ESRI Living Atlas.<br> Licensed under the Esri Master License Agreement.  Feature class found <a href="https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Parks/FeatureServer">HERE</a>
             </p>
         </body>
 </html>
