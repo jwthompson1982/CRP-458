@@ -79,8 +79,8 @@ crossorigin="">
      
 
 
-                    
-                   var polygon = L.polygon([geojson])
+                 //When I remove this, everything disapears, except the imagery basemap.   
+                 //  var polygon = L.polygon([geojson])
                     
 //Create map
                 var map = L.map('map',{
@@ -90,16 +90,7 @@ crossorigin="">
     });
       
                   
-//layer control
-		var baseMaps = {
-            "Esri World Imagery": Esri_WorldImagery,
-            "OpenStreetMap": OSM
-             };
-                    
-        var overlayMaps = {
-            "US Suicide Rates": polygon,
-            "Parks": heatMap
-        };
+
                   
 	
                 function getColor(d) {
@@ -248,7 +239,18 @@ var heat = new L.HeatLayer(coords, {
 }).addTo(map)  
  
 //When I add overlayMaps to control layer below, I loose the whole control box.  Why is this not adding the overlay layers??
- L.control.layers(baseMaps).addTo(map); 
+
+//layer control
+		var baseMaps = {
+            "Esri World Imagery": Esri_WorldImagery,
+            "OpenStreetMap": OSM
+             };
+                    
+        var overlayMaps = {
+            "US Suicide Rates": geojson,
+            "Parks": heat
+        };
+ L.control.layers(baseMaps, overlayMaps).addTo(map); 
                     
     
             </script>
