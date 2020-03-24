@@ -270,36 +270,35 @@ map.on('overlayadd', function (eventLayer) {
 		 legend2.addTo(this);
 	}	
 });
-    
+    function iowa() {
+            map.setView([42.088787, -93.547949 ], 7);
+        }
+    function lower48() {
+            map.setView([40.796072, -98.492729 ], 4);
+        }
+                    
+                    
             </script>
                 <p>
                     <a target="_blank" href="geojson&images/BeedsAtSunset.jpg">Click here</a> to see a place that has improved my mental health :-)
                 </p>
                 <br>
-            <em>Buttons not working yet!</em>  Sorry :-(<br><br>
+            
 <!--Buttons---------------------------------->
  <button type="button"
-onclick="clickHandler()">Zoom in to Iowa</button>
-            
-            <script>map,{
-                center: [41.741161, -93.158675],
-                zoom: 8,
-                          };
-            </script>
+onclick="iowa()">Zoom in to Iowa</button>
 
             <br><br>
             
   <button type="button"
-onclick="clickHandler()">Show only State outlines.</button>
-
-<script>
-    function clickHandler() {
-      alert(function style(feature) {
-    return {
-        fillOpacity: 0.00
-           }})}
-    
-</script>
+onclick="lower48()">Return to Lower 48.</button>
+            <br>
+            <br>
+           
+  <button type="button"
+onclick="">Show only State outlines.</button>
+             
+ <em>This Button not working yet!</em>
             <br><br>          
 
      
