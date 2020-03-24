@@ -27,7 +27,7 @@ crossorigin="">
         
     <h2> US Suicide Rates by State and Natural Areas (Parks)</h2>
         <h3>Natural Areas Can Improve Mood</h3>
-        <p style="font-size: 18">This is just my opinion, but I am a strong believer in the power of natural areas such as parks in improving mood, lowering strees and depression, and increasing happiness.  I know I am not alone in this thought.  Please zoom in to this map.  I am not trying to say this is conclusive evidence, but I can't help but  notice, that in some(not all) areas, when there is a higher concentration of parks, the crude suicide rate is lower. <b> Please take a look and draw your own conclusions.</b> </p>
+        <p style="font-size: 18">This is just my opinion, but I am a strong believer in the power of natural areas such as parks in improving mood, lowering stress and depression, and increasing happiness.  I know I am not alone in this thought.  Please <b>zoom in</b> to this map.  I am not trying to say this is conclusive evidence, but I can't help but  notice, that in some(not all) areas, when there is a higher concentration of parks, the crude suicide rate is lower. <b> Please take a look and draw your own conclusions.</b> </p>
     
      <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
@@ -251,13 +251,59 @@ var heat = new L.HeatLayer(coords, {
             "Parks": heat
         };
  L.control.layers(baseMaps, overlayMaps).addTo(map); 
-                    
+ 
+//ON/OFF Control for legend
+ map.on('overlayremove', function (eventLayer) {
+	console.log(eventLayer.name  + " off");
+	if (eventLayer.name == "US Suicide Rates") {
+		this.removeControl(legend);
+	}else if (eventLayer.name == "heat"){
+		this.removeControl(legend2);
+	}
+});
+
+map.on('overlayadd', function (eventLayer) {
+	console.log(eventLayer.name + " on");
+	if (eventLayer.name == "US Suicide Rates") {
+		 legend.addTo(this);
+	}else if (eventLayer.name == "heat"){
+		 legend2.addTo(this);
+	}	
+});
     
             </script>
                 <p>
                     <a target="_blank" href="geojson&images/BeedsAtSunset.jpg">Click here</a> to see a place that has improved my mental health :-)
                 </p>
                 <br>
+            <em>Buttons not working yet!</em>  Sorry :-(<br><br>
+<!--Buttons---------------------------------->
+ <button type="button"
+onclick="clickHandler()">Zoom in to Iowa</button>
+            
+            <script>'map',{
+                center: [41.741161, -93.158675],
+                zoom: 8,
+                          };
+            </script>
+
+            <br><br>
+            
+  <button type="button"
+onclick="clickHandler()">Show only State outlines.</button>
+
+<script>
+    function clickHandler() {
+      alert(function style)(feature) {
+    return {
+        fillOpacity: 0.00
+           ;}}}
+    
+</script> 
+            <br><br>          
+
+     
+            
         <link  rel="stylesheet" type="text/css" href="css.css">
         <script src="java.js"></script>
         <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
