@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-<!-- Leaflet and GeoJson info  -->
-    <head>
+  <head>
         <title>Leaflet Plugin</title>  
             <h1>Leaflet Plugin</h1>
 <!--Leaflet----------------------------->
-         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 
@@ -17,10 +16,14 @@ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUT
 
 crossorigin="">
 </script>
+
+<!--WMS leaflet Plugin-------------->  
+      <script src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
+      </script>
 <!--Homepage---------------->  
         <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
-        
+<!----Map Frame---------->
           <style>
         #map {
             width: 800px;
@@ -29,33 +32,34 @@ crossorigin="">
         }
         </style>
         
-    </head>
+  </head>
     <body>
         
         <div id="map"></div>
         
-            <script> 
+        <script> 
+//WMS Layer
+         var wmsLayer = L.tileLayer.wms('https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer?request=GetCapabilities&service=WMS', {
+         layers: 'Iowa Ortho 2019'
+         });
+            
+                
 //Create map
         var map = L.map('map', {
         crs: L.CRS.EPSG4326,
         center: [41.822071, -98.335329],
         zoom: 4,
-        layers: 'Iowa Ortho 2019'
-        });
+        layers: [wmsLayer]
+        }).addTo(map);
          
-//WMS Layer
-         var wmsLayer = L.tileLayer.wms('https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer?request=GetCapabilities&service=WMS', {
-         layers: 'Iowa Ortho 2019'
-         }).addTo(map);
-            
- //Layer control.  Do I even need this??       
-         var overlayMaps = {
+
+//Layer control.  Do I even need this??       
+  /*       var overlayMaps = {
          "Iowa Ortho 2019": wmsLayer
          };
          
          L.control.layers(overlayMaps).addTo(map);
-         
-            </script>
-    
+  */       
+        </script>
     </body>
 </html>
