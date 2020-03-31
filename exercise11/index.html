@@ -5,21 +5,19 @@
             <h1>Leaflet Plugin</h1>
 <!--Leaflet----------------------------->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-
         crossorigin=""/>
 
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-
 integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-
 crossorigin="">
 </script>
 
 <!--WMS leaflet Plugin-------------->  
-      <script src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
+      <script  src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
+// This didn't seem to change anything.  Do I need this?
       </script>
+    
 <!--Homepage---------------->  
         <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
@@ -30,7 +28,7 @@ crossorigin="">
             height: 700px;   
             background: black;
         }
-        </style>
+          </style>
         
   </head>
     <body>
@@ -39,27 +37,31 @@ crossorigin="">
         
         <script> 
 //WMS Layer
-         var wmsLayer = L.tileLayer.wms('https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer?request=GetCapabilities&service=WMS', {
-         layers: 'Iowa Ortho 2019'
-         });
+            var naip_2019_nc = L.tileLayer.wms("https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer", { layers: 'naip_2019_nc', format: 'image/png', transparent: true, attribution: "Iowa State University GIS Facility &copy; 2020, USDA National Agriculture Imagery Program 2019" 
+} ) ; 
             
-                
+//Radar                
+            var nexrad = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/nOr.cgi", { layers: 'nexrad-nOr-900913', format: 'image/png', transparent: true, attribution: "Weather data &copy; 2018 IEM Nexrad" }); 
+            
 //Create map
         var map = L.map('map', {
         crs: L.CRS.EPSG4326,
-        center: [41.822071, -98.335329],
-        zoom: 4,
-        layers: [wmsLayer]
+        center: [41.559005, -93.280409],
+        zoom: 6,
+        layers: [naip_2019_nc]
         }).addTo(map);
          
 
-//Layer control.  Do I even need this??       
-  /*       var overlayMaps = {
-         "Iowa Ortho 2019": wmsLayer
+//Layer control.       
+       var baseMaps = {
+           "2019 Iowa Ortho Photo": naip_2019_nc
+       };
+            var overlayMaps = {
+         "NexRAD": nexrad
          };
          
-         L.control.layers(overlayMaps).addTo(map);
-  */       
+         L.control.layers(baseMaps, overlayMaps).addTo(map);
+        
         </script>
     </body>
 </html>
