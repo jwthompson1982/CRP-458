@@ -14,10 +14,11 @@ crossorigin="">
 </script>
 
 <!--WMS leaflet Plugin-------------->  
-      <script  src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
+ <!--     <script  src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
 // This didn't seem to change anything.  Do I need this?
       </script>
-    
+-->
+
 <!--Homepage---------------->  
         <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
         <br>
@@ -34,14 +35,15 @@ crossorigin="">
     <body>
         
         <div id="map"></div>
-        
+  
+
         <script> 
 //WMS Layer
             var naip_2019_nc = L.tileLayer.wms("https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer", { layers: 'naip_2019_nc', format: 'image/png', transparent: true, attribution: "Iowa State University GIS Facility &copy; 2020, USDA National Agriculture Imagery Program 2019" 
 } ) ; 
             
 //Radar                
-            var nexrad = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/nOr.cgi", { layers: 'nexrad-nOr-900913', format: 'image/png', transparent: true, attribution: "Weather data &copy; 2018 IEM Nexrad" }); 
+            var nexrad = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/nOr.cgi", { layers: 'nexrad-nOr', format: 'image/png', transparent: true, attribution: "Weather data &copy; 2018 IEM Nexrad" }); 
             
 //Create map
         var map = L.map('map', {
@@ -49,8 +51,9 @@ crossorigin="">
         center: [41.559005, -93.280409],
         zoom: 6,
         layers: [naip_2019_nc]
-        }).addTo(map);
-         
+        });
+        
+
 
 //Layer control.       
        var baseMaps = {
@@ -60,8 +63,12 @@ crossorigin="">
          "NexRAD": nexrad
          };
          
-         L.control.layers(baseMaps, overlayMaps).addTo(map);
-        
+            var betterscale = {
+                "betterscale": betterscale
+            };
+            
+         L.control.layers(baseMaps, overlayMaps, betterscale).addTo(map);
+                    
         </script>
     </body>
 </html>
