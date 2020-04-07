@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-        <title>Leaflet Plugin</title>  
-            <h1>Leaflet Plugin</h1>
+    <head>
+       <title>MapBox Styling</title>
+<h1>Walnut Woods State Park</h1>
+        <h2>West Des Moines, IA</h2>
+        
 <!--Leaflet----------------------------->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -13,74 +15,53 @@ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUT
 crossorigin="">
 </script>
 
-<!--CSS and JS links to scalebar-->      
-  <link rel="stylesheet" href="L.Control.BetterScale.css">
-      
-<script src="L.Control.BetterScale.js">
-      </script>    
-      
-<!--WMS leaflet Plugin-------------->  
- <!--     <script  src="https://github.com/heigeo/leaflet.wms/blob/gh-pages/src/leaflet.wms.js">
-// This didn't seem to change anything.  Do I need this?
-      </script>
--->
+<!--Homepage link and Map style -->
+<a href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
+        <br><br>
+    
+     <style>
 
-<!--Homepage---------------->  
-        <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
-        <br>
-<!----Map Frame---------->
-          <style>
         #map {
-            width: 800px;
-            height: 700px;   
+
+            width: 700px;
+
+            height: 500px;
+            
             background: black;
         }
-          </style>
-        
-  </head>
-    <body>
-        
-        <div id="map"></div>
-  
 
-        <script> 
-//WMS Layer
-            var naip_2019_nc = L.tileLayer.wms("https://athene.gis.iastate.edu/arcgis/services/ortho/naip_2019_nc/ImageServer/WMSServer", { layers: 'naip_2019_nc', format: 'image/png', transparent: true, attribution: "Iowa State University GIS Facility &copy; 2020, USDA National Agriculture Imagery Program 2019" 
-} ) ; 
-            
-//Radar                
-            var nexrad = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/nOr.cgi", { layers: 'nexrad-nOr', format: 'image/png', transparent: true, attribution: "Weather data &copy; 2018 IEM Nexrad" }); 
-            
-           
-            
-//Create map
-        var map = L.map('map', {
-        crs: L.CRS.EPSG4326,
-        center: [41.559005, -93.280409],
-        zoom: 6,
-        layers: [naip_2019_nc]
-        });
         
 
- L.control.betterscale().addTo(map);
-//Layer control.       
-       var baseMaps = {
-           "2019 Iowa Ortho Photo": naip_2019_nc
-       };
-            var overlayMaps = {
-         "NexRAD": nexrad
-         };
+    </style>   
+    </head>
+        <body>
             
-         L.control.layers(baseMaps, overlayMaps).addTo(map);
-                    
-        </script>
-                <!--Copy from here to end of div to add nav to each page --> 
+            <div id="map"></div>
+            
+            <script> 
+                
+//Map view-point
+                var map = L.map('map').setView([41.542063, -93.740175 ], 15);
+                
+//Custom mapbox styles: mapbox://styles/bcrat/ck8paend907wt1im16ldypw4h 
+                
+L.tileLayer('https://api.mapbox.com/styles/v1/bcrat/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+maxZoom: 18,
+id: 'ck8paend907wt1im16ldypw4h',
+accessToken: 'pk.eyJ1IjoiYmNyYXQiLCJhIjoiY2s2cHB2cjNzMGNnNzNtcDd3eXdvMmQwcSJ9.P3u0JhcLyYF-6PJDr4gSzA' 
+}).addTo(map);
+                </script>
+            
+            
+<!--Copy from here to end of div to add nav to each page --> 
     <br>
     <br>
     <link  rel="stylesheet" type="text/css" href="css.css">
     <script src="java.js"></script>
 <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
     
+            
     <!--Below is my side navbar to use on each page.  Edit for each page as neccesary-->
    <div id="mySidenav" class="sidenav">
        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -98,10 +79,11 @@ crossorigin="">
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise7/">Leaflet.js Layer Control - Multiple Layers and Basemaps </a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise8/">Leaflet.js GeoJSON Layers</a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise9/"> Leaflet.js Choropleth Map</a></li>
-      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise10/"> Leaflet Map with Legend</a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise10/"> Leaflet Map with Legend </a></li>
+      <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise11/"> Leaflet Plugin  </a></li>
         </ol>
   
     </div>  
-<!---------------------------------------- -->
-    </body>
+<!---------------------------------------- --> 
+        </body>
 </html>
