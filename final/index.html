@@ -20,8 +20,10 @@
         
 <!--Homepage-->
         <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
-<!--GeoJson-->        
-        <script src="geojson_directory/Pop_1mile_Small_Parks.geojson">//smallParks</script>
+<!--GeoJsons-->        
+        <script src="geojson_directory/Des_Moines_Parks_1mile_Pop.geojson">//parkPop
+        </script>
+        
 <!--Map-->
         <style>
         #map {
@@ -55,9 +57,9 @@
                 
 //Choropleth map    
                      	function getColor(d) {
-		return d > 20104 ? '#2ca25f' :
-				d > 13107  ? '#99d8c9' :
-				d > 6112  ? '#e5f5f9' :
+		return d > 17714 ? '#2ca25f' :
+				d > 11888  ? '#99d8c9' :
+				d > 6062  ? '#e5f5f9' :
 							'#ffffcc';
 	}
 
@@ -87,7 +89,8 @@
 		}
 	}
 
-	var geojson;
+	var geojson1;
+                
 
 	function resetHighlight(e) {
 		geojson.resetStyle(e.target);
@@ -105,13 +108,60 @@
 		});
 	}
 
-	geojson = L.geoJson(smallParks, {
+	geojson1 = L.geoJson(parkPop, {
 		style: style,
 		onEachFeature: onEachFeature,
         
 	   }).addTo(map);
+                            
         
 //End Pop near parks---------------
+                
+/*set legend color
+//function getColor(d) {
+//  return    d > 17714 ? '#2ca25f' :
+//            d > 11888  ? '#99d8c9' :
+//            d > 6062  ? '#e5f5f9' :
+//            '#ffffcc';
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.7
+    };
+}                
+                //Create Legend
+var legend = L.control({
+  position: 'bottomleft'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    density = [1000, 500, 200,100 ,50],
+    labels = ['Dense', ' ', ' ', ' ', 'Sparse'];
+
+	
+	//console.log(feature.length);
+	
+	 div.innerHTML += "<b>Pop Density</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < density.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(density[i] ) + ' "></i> ' +
+      density[i] +' '+ labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+*/
             </script>
             
             
