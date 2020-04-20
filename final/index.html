@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-       <title>Final</title>
+       <title>CRP 458 Final</title>
 <!--Leaflet css-->  
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 
@@ -56,7 +56,7 @@
     });
                 
 //Choropleth map    
-                     	function getColor(d) {
+        function getColor(d) {
 		return d > 17714 ? '#2ca25f' :
 				d > 11888  ? '#99d8c9' :
 				d > 6062  ? '#e5f5f9' :
@@ -90,10 +90,9 @@
 	}
 
 	var geojson1;
-                
-
+       
 	function resetHighlight(e) {
-		geojson.resetStyle(e.target);
+		geojson1.resetStyle(e.target);
 	}
 
 	function zoomToFeature(e) {
@@ -117,51 +116,54 @@
         
 //End Pop near parks---------------
                 
-/*set legend color
-//function getColor(d) {
-//  return    d > 17714 ? '#2ca25f' :
-//            d > 11888  ? '#99d8c9' :
-//            d > 6062  ? '#e5f5f9' :
-//            '#ffffcc';
+//set legend color
+function getColor(d) {
+  return    d > 34000 ? '#238b45' :
+            d > 22000 ? '#74c476' :
+            d > 14000  ? '#bae4b3' :
+            d > 6000  ? '#edf8e9' :
+            '#ffffcc';
 }
-
+/*
 function style(feature) {
     return {
-        fillColor: getColor(feature.properties.),
+        fillColor: getColor(feature.properties.SUM_Pop),
         weight: 1,
         opacity: 1,
         color: 'white',
         dashArray: '2',
         fillOpacity: 0.7
     };
-}                
-                //Create Legend
+}
+*/
+                
+//Create Legend
 var legend = L.control({
   position: 'bottomleft'
-	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
 });
 
 legend.onAdd = function(map) {
 
   var div = L.DomUtil.create('div', 'info legend'),
-    density = [1000, 500, 200,100 ,50],
-    labels = ['Dense', ' ', ' ', ' ', 'Sparse'];
+    SUM_Pop = [34000, 22000, 14000, 6000],
+    labels = ['High', ' ', ' ', 'Low'];
 
 	
 	//console.log(feature.length);
 	
-	 div.innerHTML += "<b>Pop Density</b><br>";
+	 div.innerHTML += "<b>Population 1-Mile Around Parks</b><br>";
   // loop through items and generate a label with a colored square for each
-  for (var i = 0; i < density.length; i++) {
+  for (var i = 0; i < SUM_Pop.length; i++) {
     div.innerHTML +=
-      '<i style="background:' + getColor(density[i] ) + ' "></i> ' +
-      density[i] +' '+ labels[i]+'<br>';
+      '<i style="background:' + getColor(SUM_Pop[i] ) + ' "></i> ' +
+      SUM_Pop[i] +' '+ labels[i]+'<br>';
   }
 
   return div;
 };
 legend.addTo(map);
-*/
+
             </script>
             
             
