@@ -129,19 +129,19 @@
 							'#ffffcc';
 	}
 
-	function style2(feature) {
+	function style2(feature2) {
 		return {
 			weight: 1,
 			opacity: 1,
 			color: 'black',
 			fillOpacity: 1,
-			fillColor: getColor(feature.properties.Pop_Per_Acre)
+			fillColor: getColor2(feature.properties.Pop_Per_Acre)
 		};
 	}
 
 	function highlightFeature2(e) {
-		var layer = e.target;
-		layer.setStyle({
+		var layer2 = e.target;
+		layer2.setStyle({
 			weight: 2,
 			color: 'black',
 			dashArray: '',
@@ -153,20 +153,20 @@
 */
 
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer.bringToFront();
+			layer2.bringToFront();
 		}
 	}
               
 	function resetHighlight2(e) {
-		geojson1.resetStyle(e.target);
+		geojson2.resetStyle(e.target);
 	}
 
 	function zoomToFeature2(e) {
 		map.fitBounds(e.target.getBounds());
 	}
 
-	function onEachFeature2(feature, layer) {
-		layer.on({
+	function onEachFeature2(feature2, layer2) {
+		layer2.on({
 			mouseover: highlightFeature2,
 			mouseout: resetHighlight2,
 			click: zoomToFeature2
@@ -174,10 +174,10 @@
 	}
 
 	geojson2 = L.geoJson(density, {
-		style: style2,
-		onEachFeature: onEachFeature2
+		style2: style2,
+		onEachFeature2: onEachFeature2
         
-	   })/*.bindPopup(feature.properties.Name)*/.addTo(map);
+	   })/*.bindPopup(feature.properties.Name)*/;
                             
         
 //End social distancing----------------- 
