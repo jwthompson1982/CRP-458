@@ -58,13 +58,13 @@
     });
                 
 //Choropleth map for litter   
-        function getColor(d) {
-		return d > 17714 ? '#2ca25f' :
-				d > 11888  ? '#99d8c9' :
-				d > 6062  ? '#e5f5f9' :
+  /*      function getColor(d) {
+		return d > 22000 ? '#2ca25f' :
+				d > 14000  ? '#99d8c9' :
+				d > 6000  ? '#e5f5f9' :
 							'#ffffcc';
 	}
-
+*/
 	function style(feature) {
 		return {
 			weight: 1,
@@ -121,12 +121,12 @@
                 
 //Choropleth map for social distancing   
         function getColor2(d) {
-		return d > 10000 ? '#2e557a' :
-				d > 1000  ? '#4b7e98' :
-				d > 500  ? '#69a8b7' :
-                d > 60  ? '#9bc4c1' :
-				d > 20  ? '#e6eecf' :
-				'#ffffff';
+		return d > 9999 ? '#2e557a' :
+				d > 999  ? '#4b7e98' :
+				d > 499  ? '#69a8b7' :
+                d > 59  ? '#9bc4c1' :
+				d > 9  ? '#e6eecf' :
+				'#000';//black = <1
                         
         ;
 	}
@@ -182,16 +182,17 @@
 	   })/*.bindPopup(feature.properties.Name)*/;
                             
         
-//End social distancing----------------- 
+//End social distancing layer----------------- 
                 
 //set legend color
 function getColor(d) {
-  return    d > 34000 ? '#238b45' :
-            d > 22000 ? '#74c476' :
-            d > 14000  ? '#bae4b3' :
-            d > 6000  ? '#edf8e9' :
-            '#ffffcc';
+  return    d > 27999 ? '#238443' :
+            d > 14999 ? '#78c679' :
+            d > 8899  ? '#c2e699' :
+            d > 296  ? '#ffffcc' :
+            '#000';
 }
+
 /*
 function style(feature) {
     return {
@@ -204,8 +205,8 @@ function style(feature) {
     };
 }
 */
-                
-//Create Legend
+
+//Create Legend for litter layer---------------
 var legend = L.control({
   position: 'bottomleft'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
@@ -214,7 +215,7 @@ var legend = L.control({
 legend.onAdd = function(map) {
 
   var div = L.DomUtil.create('div', 'info legend'),
-    SUM_Pop = [34000, 22000, 14000, 6000],
+    SUM_Pop = [28000, 15000, 8900, 300],
     labels = ['High', ' ', ' ', 'Low'];
 
 	
@@ -231,8 +232,36 @@ legend.onAdd = function(map) {
   return div;
 };
 legend.addTo(map);
-
+//End litter legend--------------------  
                 
+//Create Legend for social dist. layer---------  After adding a 2 to this legend var, the layer control works.
+var legend2 = L.control({
+  position: 'bottomright'
+	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend2.onAdd = function(map) {
+
+  var div2 = L.DomUtil.create('div2', 'info legend2'),
+    Pop_Per_Acre = [10000, 1000, 500, 60, 10],
+    labels2 = ['High', ' ', ' ', ' ', 'Low'];
+
+	
+	//console.log(feature.length);
+	
+	 div2.innerHTML += "<b>Population Per Acre of Park</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < Pop_Per_Acre.length; i++) {
+    div2.innerHTML +=
+      '<i2 style="background:' + getColor2(SUM_Pop[i] ) + ' "></i> ' +
+      Pop_Per_Acre[i] +' '+ labels2[i]+'<br>';
+  }
+
+  return div2;
+};
+//adding '2' to legend here breaks the layer controller
+legend.addTo(map);
+//End Social dist. legend--------------------               
 //layer control
 		var baseMaps = {
             "Esri World Imagery": Esri_WorldImagery,
