@@ -121,15 +121,17 @@
                 
 //Choropleth map for social distancing   
         function getColor2(d) {
-		return d > 100000 ? '#08519c' :
-				d > 10000  ? '#3182bd' :
-				d > 1000  ? '#6baed6' :
-                d > 500  ? '#bdd7e7' :
-				d > 60  ? '#eff3ff' :
-							'#ffffcc';
+		return d > 10000 ? '#2e557a' :
+				d > 1000  ? '#4b7e98' :
+				d > 500  ? '#69a8b7' :
+                d > 60  ? '#9bc4c1' :
+				d > 20  ? '#e6eecf' :
+				'#ffffff';
+                        
+        ;
 	}
-
-	function style2(feature2) {
+//Choropleth styled here based on geojson field
+	function style2(feature) {
 		return {
 			weight: 1,
 			opacity: 1,
@@ -140,8 +142,8 @@
 	}
 
 	function highlightFeature2(e) {
-		var layer2 = e.target;
-		layer2.setStyle({
+		var layer = e.target;
+		layer.setStyle({
 			weight: 2,
 			color: 'black',
 			dashArray: '',
@@ -153,7 +155,7 @@
 */
 
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer2.bringToFront();
+			layer.bringToFront();
 		}
 	}
               
@@ -165,17 +167,17 @@
 		map.fitBounds(e.target.getBounds());
 	}
 
-	function onEachFeature2(feature2, layer2) {
-		layer2.on({
+	function onEachFeature2(feature, layer) {
+		layer.on({
 			mouseover: highlightFeature2,
 			mouseout: resetHighlight2,
-			click: zoomToFeature2
+			click: zoomToFeature
 		});
 	}
 
 	geojson2 = L.geoJson(density, {
-		style2: style2,
-		onEachFeature2: onEachFeature2
+		style: style2,
+		onEachFeature: onEachFeature2
         
 	   })/*.bindPopup(feature.properties.Name)*/;
                             
