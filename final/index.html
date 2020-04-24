@@ -126,7 +126,7 @@
 				d > 499  ? '#69a8b7' :
                 d > 59  ? '#9bc4c1' :
 				d > 9  ? '#e6eecf' :
-				'#000';//black = <1
+				'#000';//black = <9
                         
         ;
 	}
@@ -233,7 +233,7 @@ legend.onAdd = function(map) {
 };
 legend.addTo(map);
 //End litter legend--------------------  
-                
+  
 //Create Legend for social dist. layer---------  After adding a 2 to this legend var, the layer control works.
 var legend2 = L.control({
   position: 'bottomright'
@@ -242,7 +242,7 @@ var legend2 = L.control({
 
 legend2.onAdd = function(map) {
 
-  var div2 = L.DomUtil.create('div2', 'info legend2'),
+  var div2 = L.DomUtil.create('div2', 'info legend'),
     Pop_Per_Acre = [10000, 1000, 500, 60, 10],
     labels2 = ['High', ' ', ' ', ' ', 'Low'];
 
@@ -251,16 +251,16 @@ legend2.onAdd = function(map) {
 	
 	 div2.innerHTML += "<b>Population Per Acre of Park</b><br>";
   // loop through items and generate a label with a colored square for each
-  for (var i = 0; i < Pop_Per_Acre.length; i++) {
+  for (var i2 = 0; i2 < Pop_Per_Acre.length; i2++) {
     div2.innerHTML +=
-      '<i2 style="background:' + getColor2(SUM_Pop[i] ) + ' "></i> ' +
-      Pop_Per_Acre[i] +' '+ labels2[i]+'<br>';
+      '<i2 style="background:' + getColor2(Pop_Per_Acre[i2] ) + ' "></i2> ' +
+      Pop_Per_Acre[i2] +' '+ labels2[i2]+'<br>';
   }
 
   return div2;
 };
-//adding '2' to legend here breaks the layer controller
-legend.addTo(map);
+                
+legend2.addTo(map);
 //End Social dist. legend--------------------               
 //layer control
 		var baseMaps = {
