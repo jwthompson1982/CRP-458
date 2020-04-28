@@ -41,6 +41,7 @@
             
             <script>
         
+                
     var OSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 18
@@ -106,38 +107,40 @@
            // mouseover: highlightFeature2,
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: zoomToFeature
+			click: zoomToFeature,
+            
 		});
 	}
 
-	geojson1 = L.geoJson(parkPop, {
+	var geojson1 = L.geoJson(parkPop, {
 		style: style,
 		onEachFeature: onEachFeature,
+     
         
 	   })/*.bindPopup(feature.properties.Name)*/.addTo(map);
                             
         
 //End Pop near parks---------------
                 
-//Choropleth map for social distancing   
-        function getColor2(d) {
+//Choropleth map for social distancing 
+/*                
+                function getColor2(d) {
 		return d > 9999 ? '#2e557a' :
 				d > 999  ? '#4b7e98' :
 				d > 499  ? '#69a8b7' :
                 d > 59  ? '#9bc4c1' :
 				d > 9  ? '#e6eecf' :
 				'#000';//black = <9
-                        
-        ;
 	}
+    */
 //Choropleth styled here based on geojson field
-	function style2(feature) {
+	function style2(feature2) {
 		return {
 			weight: 1,
 			opacity: 1,
 			color: 'black',
 			fillOpacity: 1,
-			fillColor: getColor2(feature.properties.Pop_Per_Acre)
+			fillColor: getColor2(feature2.properties.Pop_Per_Acre)
 		};
 	}
 
@@ -175,7 +178,7 @@
 		});
 	}
 
-	geojson2 = L.geoJson(density, {
+	var geojson2 = L.geoJson(density, {
 		style: style2,
 		onEachFeature: onEachFeature2
         
@@ -232,9 +235,22 @@ legend.onAdd = function(map) {
   return div;
 };
 legend.addTo(map);
+                
+                
 //End litter legend--------------------  
   
 //Create Legend for social dist. layer---------  After adding a 2 to this legend var, the layer control works.
+   
+//set legend color
+        function getColor2(d) {
+		return d > 9999 ? '#2e557a' :
+				d > 999  ? '#4b7e98' :
+				d > 499  ? '#69a8b7' :
+                d > 59  ? '#9bc4c1' :
+				d > 9  ? '#e6eecf' :
+				'#e6eecf';//black = <9
+	} 
+
 var legend2 = L.control({
   position: 'bottomright'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
@@ -242,24 +258,22 @@ var legend2 = L.control({
 
 legend2.onAdd = function(map) {
 
-  var div2 = L.DomUtil.create('div2', 'info legend'),
+//new code for legend 2
+ var div = L.DomUtil.create('div', 'info legend'), 
     Pop_Per_Acre = [10000, 1000, 500, 60, 10],
     labels2 = ['High', ' ', ' ', ' ', 'Low'];
 
-	
-	//console.log(feature.length);
-	
-	 div2.innerHTML += "<b>Population Per Acre of Park</b><br>";
-  // loop through items and generate a label with a colored square for each
-  for (var i2 = 0; i2 < Pop_Per_Acre.length; i2++) {
-    div2.innerHTML +=
-      '<i2 style="background:' + getColor2(Pop_Per_Acre[i2] ) + ' "></i2> ' +
-      Pop_Per_Acre[i2] +' '+ labels2[i2]+'<br>';
+div.innerHTML += "<b>Population Per Acre of Park</b><br>";
+
+// loop through items and generate a label with a colored square for each  
+for (var i = 0; i < Pop_Per_Acre.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor2(Pop_Per_Acre[i] ) + ' "></i> ' +
+      Pop_Per_Acre[i] +' '+ labels2[i]+'<br>';
   }
 
-  return div2;
-};
-                
+  return div;
+};   
 legend2.addTo(map);
 //End Social dist. legend--------------------               
 //layer control
@@ -283,7 +297,19 @@ legend2.addTo(map);
           
 <!--Copy from here to end of div to add nav to each page --> 
     <br>
+<!--Explination of layers -->
+            <h2 style="color: #238443">Population 1-Mile Around Parks</h2>
+       <b>The layer seen in green was developed using ARCGIS Online. I downloaded park and census shapefiles from <br><a target="_blank" href="https://www.dsm.city/city_of_des_moines_gis_data/index.php">The City of Des Moines GIS webpage</a>.  I then summarized the population of census blocks within one mile around all<br> of the parks using the tool "Summarize nearby".  This process generated population data that I used to make a<br> choropleth map.  I converted this layer into a GEOJSON file which is visualized above as the "Parks more likely<br> to have more litter?" layer.  I added a question mark to show this is simply a question, and areas with higher <br>populations aren't always going to have more litter issues. Although population near a park is a proper consideration <br>for predicting litter, more factors go into this.   
+            </b>
+            <br>
+            
+            <h2 style="color: #2e557a">Population Per Acre of Park</h2>
+            <b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines <br> GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population density of areas around a park is a good
+            start, but much more data is needed. Things like daily electronic monitoring of pedestrians and on the ground visuals are great data to have as well.  
+            </b>
+            
     <br>
+    <br>        
     <link  rel="stylesheet" type="text/css" href="css.css">
     <script src="java.js"></script>
 <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
