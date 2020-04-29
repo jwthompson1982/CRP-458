@@ -181,8 +181,9 @@ function onEachFeature2(feature, layer) {
 		}
 	}
               
-	function resetHighlight(e) { info.update;
+	function resetHighlight(e) { 
 		geojson1.resetStyle(e.target);
+        info.update();
 	}
 
 	function zoomToFeature(e) {
@@ -199,14 +200,33 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Des Moines Parks</h4>' +  (props ?
+    this._div.innerHTML = '<h4>Population 1-Mile Around Parks</h4>' +  (props ?
         '<b>' + props.Name + '</b><br />' + props.SUM_Pop + ' people '
         : 'Hover over a park');
 };
 
 info.addTo(map);                
 // end hover box--------------------------
-	
+                
+// hover box2-----------------------------                
+var info2 = L.control();
+
+info2.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info2.update = function (props) {
+    this._div.innerHTML = '<h4>Population Per Acre of Park</h4>' +  (props ?
+        '<b>' + props.Name + '</b><br />' + props.Pop_Per_Acre + ' people / Acre '
+        : 'Hover over a park');
+};
+
+info2.addTo(map);                
+// end hover box2--------------------------	
+                
 //Create Legend for litter layer---------------
 var legend = L.control({
   position: 'bottomleft'
@@ -276,6 +296,7 @@ legend2.addTo(map);
 
 	function highlightFeature2(e) {
 		var layer = e.target;
+        info2.update(layer.feature.properties);
 		layer.setStyle({
 			weight: 2,
 			color: 'black',
@@ -294,6 +315,7 @@ legend2.addTo(map);
               
 	function resetHighlight2(e) {
 		geojson2.resetStyle(e.target);
+        info2.update();
 	}
 
 	function zoomToFeature2(e) {
