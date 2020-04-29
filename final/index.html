@@ -33,38 +33,24 @@
             height: 600px;   
             background: black;
             }
+            .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
         </style>
-        <style>
-            
-     .info
-{
-padding:
-6px 
-8px; font:
-14px/16px Arial, Helvetica, sans-serif;
-background: white;
-background:
-rgba(255,255,255,0.8);
-box-shadow:
-0 
-0 15px 
-rgba(0,0,0,0.2);
-border-radius:
-5px; }
-.info
-h4
-{
-margin:
-0 
-0 5px;
-color:
-#777; } 
-</style>
         
     </head>
         <body>
             <div id="map"></div>
-       <link  rel="stylesheet" type="text/css" href="css.css">     
+       <link  rel="stylesheet" type="text/css" href="https://jwthompson1982.github.io/CRP-458/final/css.css">     
             <script>
         
                 
@@ -84,16 +70,7 @@ color:
     layers: [OSM]
     });
                 
-//Choropleth map for litter   
-  /*      function getColor(d) {
-		return d > 22000 ? '#2ca25f' :
-				d > 14000  ? '#99d8c9' :
-				d > 6000  ? '#e5f5f9' :
-							'#ffffcc';
-	}
-*/
- 
-
+/*
 //control that shows park info on hover -------
 var info = L.control(); 
                 
@@ -119,7 +96,18 @@ this._div.innerHTML
  : 'Hover over a park');
  }; info.addTo(map);                
  //End hover box ----------------------------
-
+*/
+  var geojson1 = L.geoJson(parkPop, {
+style: style,
+onEachFeature: onEachFeature,
+}).addTo(map);
+                
+var geojson2 = L.geoJson(density, {
+style: style2,
+onEachFeature: onEachFeature2
+});               
+                
+// style function for geojson1             
 	function style(feature) {
 		return {
 			weight: 1,
@@ -129,19 +117,64 @@ this._div.innerHTML
 			fillColor: getColor(feature.properties.SUM_Pop)
 		};
 	}
+// style function for geojson2
+    function style2(feature2) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: 'black',
+			fillOpacity: 1,
+			fillColor: getColor2(feature2.properties.Pop_Per_Acre)
+		};
+	}
+                
+// color function for geojson1    
+function getColor(d) {
+  return    d > 27999 ? '#238443' :
+            d > 14999 ? '#78c679' :
+            d > 8899  ? '#c2e699' :
+            d > 296  ? '#ffffcc' :
+            '#000';
+}
+                
+// color function for geojson2               
+function getColor2(d) {
+		return d > 9999 ? '#2e557a' :
+				d > 999  ? '#4b7e98' :
+				d > 499  ? '#69a8b7' :
+                d > 59  ? '#9bc4c1' :
+				d > 9  ? '#e6eecf' :
+				'#e6eecf';//black = <9
+	} 
+                
+// on each feature function for geojson1     
+function onEachFeature(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: zoomToFeature,
+            
+		});
+	}
+                
+// on each feature function for geojson2          
+function onEachFeature2(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature2,
+			mouseout: resetHighlight2,
+			click: zoomToFeature
+		});
+	}
 
-	function highlightFeature(e) { info.update(layer.feature.properties);
+	function highlightFeature(e) { //info.update(layer.feature.properties);
 		var layer = e.target;
+        info.update(layer.feature.properties);
 		layer.setStyle({
 			weight: 2,
 			color: 'black',
 			dashArray: '',
 			fillOpacity: 0.7,
 		});
-      /*  
-        function highlightFeature2(e) {                                        geojson1.bindPopup(feature.properties.name)	
-		};
-*/
 
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 			layer.bringToFront();
@@ -155,114 +188,25 @@ this._div.innerHTML
 	function zoomToFeature(e) {
 		map.fitBounds(e.target.getBounds());
 	}
+// hover box-----------------------------                
+var info = L.control();
 
-	function onEachFeature(feature, layer) {
-		layer.on({
-           // mouseover: highlightFeature2,
-			mouseover: highlightFeature,
-			mouseout: resetHighlight,
-			click: zoomToFeature,
-            
-		});
-	}
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
 
-	var geojson1 = L.geoJson(parkPop, {
-		style: style,
-		onEachFeature: onEachFeature,
-     
-        
-	   })/*.bindPopup(feature.properties.Name)*/.addTo(map);
-                            
-        
-//End Pop near parks---------------
-                
-//Choropleth map for social distancing 
-/*                
-                function getColor2(d) {
-		return d > 9999 ? '#2e557a' :
-				d > 999  ? '#4b7e98' :
-				d > 499  ? '#69a8b7' :
-                d > 59  ? '#9bc4c1' :
-				d > 9  ? '#e6eecf' :
-				'#000';//black = <9
-	}
-    */
-//Choropleth styled here based on geojson field
-	function style2(feature2) {
-		return {
-			weight: 1,
-			opacity: 1,
-			color: 'black',
-			fillOpacity: 1,
-			fillColor: getColor2(feature2.properties.Pop_Per_Acre)
-		};
-	}
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Des Moines Parks</h4>' +  (props ?
+        '<b>' + props.Name + '</b><br />' + props.SUM_Pop + ' people '
+        : 'Hover over a park');
+};
 
-	function highlightFeature2(e) {
-		var layer = e.target;
-		layer.setStyle({
-			weight: 2,
-			color: 'black',
-			dashArray: '',
-			fillOpacity: 0.7,
-		});
-      /*  
-        function highlightFeature2(e) {                                        geojson1.bindPopup(feature.properties.name)	
-		};
-*/
-
-		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer.bringToFront();
-		}
-	}
-              
-	function resetHighlight2(e) {
-		geojson2.resetStyle(e.target);
-	}
-
-	function zoomToFeature2(e) {
-		map.fitBounds(e.target.getBounds());
-	}
-
-	function onEachFeature2(feature, layer) {
-		layer.on({
-			mouseover: highlightFeature2,
-			mouseout: resetHighlight2,
-			click: zoomToFeature
-		});
-	}
-
-	var geojson2 = L.geoJson(density, {
-		style: style2,
-		onEachFeature: onEachFeature2
-        
-	   })/*.bindPopup(feature.properties.Name)*/;
-                            
-        
-//End social distancing layer----------------- 
-                
-//set legend color
-function getColor(d) {
-  return    d > 27999 ? '#238443' :
-            d > 14999 ? '#78c679' :
-            d > 8899  ? '#c2e699' :
-            d > 296  ? '#ffffcc' :
-            '#000';
-}
-
-/*
-function style(feature) {
-    return {
-        fillColor: getColor(feature.properties.SUM_Pop),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '2',
-        fillOpacity: 0.7
-    };
-}
-*/
-
+info.addTo(map);                
+// end hover box--------------------------
+	
 //Create Legend for litter layer---------------
 var legend = L.control({
   position: 'bottomleft'
@@ -291,20 +235,8 @@ legend.onAdd = function(map) {
 legend.addTo(map);
                 
                 
-//End litter legend--------------------  
-  
-//Create Legend for social dist. layer---------  After adding a 2 to this legend var, the layer control works.
-   
-//set legend color
-        function getColor2(d) {
-		return d > 9999 ? '#2e557a' :
-				d > 999  ? '#4b7e98' :
-				d > 499  ? '#69a8b7' :
-                d > 59  ? '#9bc4c1' :
-				d > 9  ? '#e6eecf' :
-				'#e6eecf';//black = <9
-	} 
-
+//End litter legend--------------------         
+//Begin social disatance legend--------                
 var legend2 = L.control({
   position: 'bottomright'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
@@ -329,7 +261,73 @@ for (var i = 0; i < Pop_Per_Acre.length; i++) {
   return div;
 };   
 legend2.addTo(map);
-//End Social dist. legend--------------------               
+//End Social dist. legend-------------------- 
+
+	var geojson1 = L.geoJson(parkPop, {
+		style: style,
+		onEachFeature: onEachFeature,
+     
+        
+	   })/*.bindPopup(feature.properties.Name)*/.addTo(map);
+                            
+        
+//End Pop near parks---------------
+
+
+	function highlightFeature2(e) {
+		var layer = e.target;
+		layer.setStyle({
+			weight: 2,
+			color: 'black',
+			dashArray: '',
+			fillOpacity: 0.7,
+		});
+      /*  
+        function highlightFeature2(e) {                                        geojson1.bindPopup(feature.properties.name)	
+		};
+*/
+
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+	}
+              
+	function resetHighlight2(e) {
+		geojson2.resetStyle(e.target);
+	}
+
+	function zoomToFeature2(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+	
+	var geojson2 = L.geoJson(density, {
+		style: style2,
+		onEachFeature: onEachFeature2
+        
+	   })/*.bindPopup(feature.properties.Name)*/;
+                            
+        
+//End social distancing layer----------------- 
+                
+//set legend color
+
+
+/*
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.SUM_Pop),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.7
+    };
+}
+*/
+ 
+
+              
 //layer control
 		var baseMaps = {
             "Esri World Imagery": Esri_WorldImagery,
