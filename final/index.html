@@ -52,8 +52,8 @@
             <div id="map"></div>
        <link  rel="stylesheet" type="text/css" href="https://jwthompson1982.github.io/CRP-458/final/css.css">     
             <script>
-        
                 
+            
     var OSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 18
@@ -100,11 +100,13 @@ this._div.innerHTML
   var geojson1 = L.geoJson(parkPop, {
 style: style,
 onEachFeature: onEachFeature,
-}).addTo(map);
+
+});
                 
 var geojson2 = L.geoJson(density, {
 style: style2,
-onEachFeature: onEachFeature2
+onEachFeature: onEachFeature2,
+
 });               
                 
 // style function for geojson1             
@@ -169,6 +171,7 @@ function onEachFeature2(feature, layer) {
 	function highlightFeature(e) { //info.update(layer.feature.properties);
 		var layer = e.target;
         info.update(layer.feature.properties);
+        
 		layer.setStyle({
 			weight: 2,
 			color: 'black',
@@ -203,11 +206,12 @@ info.update = function (props) {
     this._div.innerHTML = '<h4>Population 1-Mile Around Parks</h4>' +  (props ?
         '<b>' + props.Name + '</b><br />' + props.SUM_Pop + ' people '
         : 'Hover over a park');
+    
 };
 
 info.addTo(map);                
 // end hover box--------------------------
-                
+               
 // hover box2-----------------------------                
 var info2 = L.control();
 
@@ -292,7 +296,7 @@ legend2.addTo(map);
                             
         
 //End Pop near parks---------------
-
+ 
 
 	function highlightFeature2(e) {
 		var layer = e.target;
@@ -361,7 +365,10 @@ function style(feature) {
             "Parks for Social Distancing":geojson2
         };
         
-     L.control.layers(baseMaps, overlayMaps).addTo(map);   
+     L.control.layers(baseMaps, overlayMaps).addTo(map);
+                
+ Math.round(info.props.SUM_Pop)
+Math.round(info2.props.Pop_Per_Acre)
             </script>
             
             
@@ -378,8 +385,8 @@ function style(feature) {
             <br>
             
             <h2 style="color: #2e557a">Population Per Acre of Park</h2>
-            <b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines <br> GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population density of areas around a park is a good
-            start, but much more data is needed. Things like daily electronic monitoring of pedestrians and on the ground visuals are great data to have as well.  
+            <b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines <br> GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the<br> populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population<br> density of areas around a park is a good
+            start, but much more data is needed. Things like daily electronic monitoring of<br> pedestrians and on the ground visuals are great data to have as well.  
             </b>
             
     <br>
