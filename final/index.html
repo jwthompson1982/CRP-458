@@ -204,7 +204,7 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Population 1-Mile Around Parks</h4>' +  (props ?
-        '<b>' + props.Name + '</b><br />' + props.SUM_Pop + ' people '
+        '<b>' + props.Name + '</b><br />' + Math.round(props.SUM_Pop) + ' people '
         : 'Hover over a park');
     
 };
@@ -224,7 +224,7 @@ info2.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info2.update = function (props) {
     this._div.innerHTML = '<h4>Population Per Acre of Park</h4>' +  (props ?
-        '<b>' + props.Name + '</b><br />' + props.Pop_Per_Acre + ' people / Acre '
+        '<b>' + props.Name + '</b><br />' + Math.round(props.Pop_Per_Acre) + ' people / Acre '
         : 'Hover over a park');
 };
 
@@ -284,7 +284,7 @@ for (var i = 0; i < Pop_Per_Acre.length; i++) {
 
   return div;
 };   
-legend2.addTo(map);
+//legend2.addTo(map);
 //End Social dist. legend-------------------- 
 
 	var geojson1 = L.geoJson(parkPop, {
@@ -366,10 +366,45 @@ function style(feature) {
         };
         
      L.control.layers(baseMaps, overlayMaps).addTo(map);
+     
+//ON/OFF Control for legend1
+ map.on('overlayremove', function (eventLayer) {
+	console.log(eventLayer.name  + " off");
+	if (eventLayer.name == "Parks more likely to have litter?") {
+		this.removeControl(legend);
+	}else if (eventLayer.name == "Parks for Social Distancing"){
+		this.removeControl(legend2);
+	}
+});
+
+map.on('overlayadd', function (eventLayer) {
+	console.log(eventLayer.name + " on");
+	if (eventLayer.name == "Parks more likely to have litter?") {
+		 legend.addTo(this);
+	}else if (eventLayer.name == "Parks for Social Distancing"){
+		 legend2.addTo(this);
+	}	
+});   
                 
- Math.round(info.props.SUM_Pop)
-Math.round(info2.props.Pop_Per_Acre)
-                
+//ON/OFF Control for legend2
+ map.on('overlayremove', function (eventLayer2) {
+	console.log(eventLayer2.name  + " off");
+	if (eventLayer2.name == "Parks for Social Distancing") {
+		this.removeControl(legend2);
+	}else if (eventLayer2.name == "Parks more likely to have litter?"){
+		this.removeControl(legend);
+	}
+});
+
+map.on('overlayadd', function (eventLayer2) {
+	console.log(eventLayer2.name + " on");
+	if (eventLayer2.name == "Parks for Social Distancing") {
+		 legend2.addTo(this);
+	}else if (eventLayer2.name == "Parks more likely to have litter?"){
+		 legend.addTo(this);
+	}	
+}); 
+//End ON/OFF control-----------                
 //------Button code below map-------------
         function waterWorks() {
             map.setView([41.569647, -93.660334 ], 14);
@@ -382,6 +417,9 @@ Math.round(info2.props.Pop_Per_Acre)
         }
         function papaJohn() {
             map.setView([41.585182, -93.635208 ], 16);
+        }
+        function desMoines() {
+            map.setView([41.579901, -93.616244 ], 12);
         }
     
 //------------------------------------------> 
@@ -402,7 +440,10 @@ Zoom to Gray's Lake Park</button>
 <button type="button"
 onclick="papaJohn()">
 Zoom to Papajohn Sculpture Park</button>
-         
+            <br>
+<button type="button"
+onclick="desMoines()">
+Back to Des Moines</button>         
 <!--Copy from here to end of div to add nav to each page --> 
     <br>
 <!--Explination of layers -->
