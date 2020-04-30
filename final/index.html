@@ -29,11 +29,11 @@
 <!--Map-->
         <style>
         #map {
-            width: 700px;
+            width: 737px;
             height: 600px;   
             background: black;
             }
-            .info {
+.info {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
@@ -369,13 +369,40 @@ function style(feature) {
                 
  Math.round(info.props.SUM_Pop)
 Math.round(info2.props.Pop_Per_Acre)
+                
+//------Button code below map-------------
+        function waterWorks() {
+            map.setView([41.569647, -93.660334 ], 14);
+        }
+        function greenWood() {
+            map.setView([41.578828, -93.681682 ], 15);
+        }
+        function graysLake() {
+            map.setView([41.570990, -93.638313 ], 15);
+        }
+        function papaJohn() {
+            map.setView([41.585182, -93.635208 ], 16);
+        }
+    
+//------------------------------------------> 
             </script>
             
             
+<!------Buttons below map------------------->            
             
-            
-            
-          
+ <button type="button"
+onclick="greenWood()">
+Zoom to Greenwood Park</button>
+<button type="button"
+onclick="waterWorks()">
+Zoom to Waterworks Park</button>
+<button type="button"
+onclick="graysLake()">
+Zoom to Gray's Lake Park</button>
+<button type="button"
+onclick="papaJohn()">
+Zoom to Papajohn Sculpture Park</button>
+         
 <!--Copy from here to end of div to add nav to each page --> 
     <br>
 <!--Explination of layers -->
@@ -391,7 +418,11 @@ Math.round(info2.props.Pop_Per_Acre)
             
     <br>
     <br>        
-    
+
+            <br>
+            <br>
+            <br>
+            
     <script src="java.js"></script>
 <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
     
