@@ -31,12 +31,18 @@
         </script>
         <script src="geojson_directory/Travel_to_CDM_Parks.geojson">//wlkAll
         </script>
+        <script src="geojson_directory/Des_Moines_City_Limits.geojson">
+                      //cityLimits
+        </script>
+        <script src="geojson_directory/Walk_time_small_parks.geojson">
+                      //wlkSml
+        </script>
         
 <!--Map-->
         <style>
         #map {
-            width: 737px;
-            height: 600px;   
+            width: 875px;
+            height: 775px;   
             background: black;
             }
 
@@ -72,7 +78,8 @@
                 
     var Esri_Topo = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-}); 
+});  
+
                 
 //Create map
         var map = L.map('map',{
@@ -103,10 +110,22 @@ var geojson4 = L.geoJson(wlkLrg, {
 style: style4,
 onEachFeature: onEachFeature4,
 
-});                
+});    
+                
+var geojson5 = L.geoJson(cityLimits, {
+style: style5,
 
-                
-                
+});  
+
+var geojson6 = L.geoJson(wlkMed, {
+style: style6,
+onEachFeature: onEachFeature6,
+});        
+
+var geojson7 = L.geoJson(wlkSml, {
+style: style7,
+onEachFeature: onEachFeature7,
+});                         
 // style function for geojson1             
 	function style(feature) {
 		return {
@@ -146,8 +165,37 @@ onEachFeature: onEachFeature4,
 			fillOpacity: 1,
 			fillColor: getColor4(feature4.properties.ToBreak)
 		};
-	}                
-                
+	}      
+// style function for geojson5
+    function style5(feature5) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'black',
+			fillOpacity: 1,
+			fillColor: 'none'
+		};
+	} 
+// style function for geojson6
+    function style6(feature6) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: 'black',
+			fillOpacity: 1,
+			fillColor: getColor6(feature6.properties.ToBreak)
+		};
+	}
+// style function for geojson7
+    function style7(feature7) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: 'black',
+			fillOpacity: 1,
+			fillColor: getColor7(feature7.properties.ToBreak)
+		};
+	}                                    
 // color function for geojson1    
 function getColor(d) {
   return    d > 27999 ? '#238443' :
@@ -181,7 +229,22 @@ function getColor4(d) {
 				d > 4  ? 'green' :
 				'#e6eecf';//black = <0.01
 	}  
-                
+       
+// color function for geojson6               
+function getColor6(d) {
+		return d > 19 ? 'orange' :
+				d > 9  ? 'yellow' :
+				d > 4  ? 'green' :
+				'#e6eecf';//black = <0.01
+	}  
+// color function for geojson7               
+function getColor7(d) {
+		return d > 19 ? 'orange' :
+				d > 9  ? 'yellow' :
+				d > 4  ? 'green' :
+				'#e6eecf';//black = <0.01
+	}  
+                                          
 // on each feature function for geojson1     
 function onEachFeature(feature, layer) {
 		layer.on({
@@ -217,6 +280,23 @@ function onEachFeature4(feature, layer) {
 			click: zoomToFeature
 		});
 	} 
+                
+// on each feature function for geojson6         
+function onEachFeature6(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature6,
+			mouseout: resetHighlight6,
+			click: zoomToFeature
+		});
+	}   
+// on each feature function for geojson7         
+function onEachFeature7(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature7,
+			mouseout: resetHighlight7,
+			click: zoomToFeature
+		});
+	}                       
     
 //Geojson1 functions-------------------
 	function highlightFeature(e) { //info.update(layer.feature.properties);
@@ -244,14 +324,15 @@ function onEachFeature4(feature, layer) {
 		map.fitBounds(e.target.getBounds());
 	}
 // hover box-----------------------------                
-var info = L.control();
+var info = L.control({
+     position: 'topleft'
+});
 
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this.update();
     return this._div;
 };
-
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Population 1-Mile Around Parks</h4>' +  (props ?
@@ -264,7 +345,9 @@ info.addTo(map);
 // end hover box--------------------------
                
 // hover box2-----------------------------                
-var info2 = L.control();
+var info2 = L.control({
+     position: 'topleft'
+});
 
 info2.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -282,7 +365,9 @@ info2.update = function (props) {
 info2.addTo(map);                
 // end hover box2--------------------------	
 // hover box3-----------------------------                
-var info3 = L.control();
+var info3 = L.control({
+     position: 'bottomright'
+});
 
 info3.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -298,17 +383,18 @@ info3.update = function (props) {
 };
 
 info3.addTo(map);                
-// end hover box3--------------------------     // hover box4-----------------------------       
-                
-                
-var info4 = L.control();
+// end hover box3--------------------------     
+// hover box4-----------------------------       
+                                
+var info4 = L.control({
+     position: 'bottomright'
+});
 
 info4.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this.update();
     return this._div;
 };
-
 // method that we will use to update the control based on feature properties passed
 info4.update = function (props) {
     this._div.innerHTML = '<h4>Walking Time to Large Parks</h4>' +  (props ?
@@ -317,7 +403,47 @@ info4.update = function (props) {
 };
 
 info4.addTo(map);                
-// end hover box4--------------------------           
+// end hover box4-------------------------- 
+// hover box5-----------------------------       
+                                
+var info6 = L.control({
+     position: 'bottomright'
+});
+
+info6.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+// method that we will use to update the control based on feature properties passed
+info6.update = function (props) {
+    this._div.innerHTML = '<h4>Walking Time to Medium Parks</h4>' +  (props ?
+        '<b>' + props.Name + '</b><br />' + Math.round(props.ToBreak) + ' Minutes '
+        : 'Hover over a park');
+};
+
+info6.addTo(map);                
+// end hover box5--------------------------   
+// hover box6-----------------------------       
+                                
+var info7 = L.control({
+     position: 'bottomright'
+});
+
+info7.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+// method that we will use to update the control based on feature properties passed
+info7.update = function (props) {
+    this._div.innerHTML = '<h4>Walking Time to Small Parks</h4>' +  (props ?
+        '<b>' + props.Name + '</b><br />' + Math.round(props.ToBreak) + ' Minutes '
+        : 'Hover over a park');
+};
+
+info7.addTo(map);                
+// end hover box5--------------------------                   
 //Create Legend for litter layer---------------
 var legend = L.control({
   position: 'bottomleft'
@@ -329,9 +455,6 @@ legend.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'info legend'),
     SUM_Pop = [28000, 15000, 8900, 300],
     labels = ['High', ' ', ' ', 'Low'];
-
-	
-	//console.log(feature.length);
 	
 	 div.innerHTML += "<b>Population 1-Mile Around Parks</b><br>";
   // loop through items and generate a label with a colored square for each
@@ -344,12 +467,11 @@ legend.onAdd = function(map) {
   return div;
 };
 legend.addTo(map);
-                
-                
+                                
 //End litter legend--------------------         
 //Begin social disatance legend--------                
 var legend2 = L.control({
-  position: 'bottomright'
+  position: 'bottomleft'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
 });
 
@@ -375,12 +497,11 @@ for (var i = 0; i < Pop_Per_Acre.length; i++) {
 //End Social dist. legend-------------------- 
 //Begin All walking legend--------                
 var legend3 = L.control({
-  position: 'bottomright'
+  position: 'bottomleft'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
 });
 
 legend3.onAdd = function(map) {
-
 
  var div = L.DomUtil.create('div', 'info legend'), 
     ToBreak = [20, 10, 5],
@@ -397,13 +518,11 @@ for (var i = 0; i < ToBreak.length; i++) {
 
   return div;
 };   
-//legend3.addTo(map);
+legend3.addTo(map);
 //End All walking legend--------------------
-//Begin Large walking legend--------               
-                
-                
+//Begin Large walking legend--------                              
 var legend4 = L.control({
-  position: 'bottomright'
+  position: 'bottomleft'
 	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
 });
 
@@ -425,16 +544,63 @@ for (var i = 0; i < ToBreak.length; i++) {
   return div;
 };   
 //legend4.addTo(map);
-//End Large walking legend--------------------      
+//End Large walking legend--------------------    
+//Begin Med walking legend--------                              
+var legend6 = L.control({
+  position: 'bottomleft'
+	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
 
+legend6.onAdd = function(map) {
+
+ var div = L.DomUtil.create('div', 'info legend'), 
+    ToBreak = [20, 10, 5],
+    labels6 = ['Long', ' ', 'Short'];
+
+div.innerHTML += "<b>Walking Times to Large Parks</b><br>";
+
+// loop through items and generate a label with a colored square for each  
+for (var i = 0; i < ToBreak.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor6(ToBreak[i] ) + ' "></i> ' +
+      ToBreak[i] +' '+ labels6[i]+'<br>';
+  }
+
+  return div;
+};   
+//legend6.addTo(map);
+//End Med walking legend-------------------- 
+//Begin Sml walking legend--------                              
+var legend7 = L.control({
+  position: 'bottomleft'
+	  //Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend7.onAdd = function(map) {
+
+ var div = L.DomUtil.create('div', 'info legend'), 
+    ToBreak = [20, 10, 5],
+    labels7 = ['Long', ' ', 'Short'];
+
+div.innerHTML += "<b>Walking Times to Small Parks</b><br>";
+
+// loop through items and generate a label with a colored square for each  
+for (var i = 0; i < ToBreak.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor7(ToBreak[i] ) + ' "></i> ' +
+      ToBreak[i] +' '+ labels7[i]+'<br>';
+  }
+
+  return div;
+};   
+//legend7.addTo(map);
+//End Med walking legend--------------------                  
 	var geojson1 = L.geoJson(parkPop, {
 		style: style,
 		onEachFeature: onEachFeature,
-     
-        
-	   })/*.bindPopup(feature.properties.Name)*/.addTo(map);
-                            
-        
+           
+   }).addTo(map);
+                                 
 //End Pop near parks---------------
  
 //geojson2 functions--------------------
@@ -451,18 +617,14 @@ for (var i = 0; i < ToBreak.length; i++) {
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 			layer.bringToFront();
 		}
-	}
-              
+	}           
 	function resetHighlight2(e) {
 		geojson2.resetStyle(e.target);
         info2.update();
 	}
-
 	function zoomToFeature2(e) {
 		map.fitBounds(e.target.getBounds());
 	}
-
-	
 	var geojson2 = L.geoJson(density, {
 		style: style2,
 		onEachFeature: onEachFeature2
@@ -482,17 +644,14 @@ for (var i = 0; i < ToBreak.length; i++) {
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 			layer.bringToFront();
 		}
-	}
-              
+	}           
 	function resetHighlight3(e) {
 		geojson3.resetStyle(e.target);
         info3.update();
 	}
-
 	function zoomToFeature3(e) {
 		map.fitBounds(e.target.getBounds());
 	}
-
 	var geojson3 = L.geoJson(wlkAll, {
 		style: style3,
 		onEachFeature: onEachFeature3
@@ -508,42 +667,95 @@ for (var i = 0; i < ToBreak.length; i++) {
 			dashArray: '',
 			fillOpacity: 0.7,
 		});
-
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 			layer.bringToFront();
 		}
-	}
-              
+	}            
 	function resetHighlight4(e) {
 		geojson4.resetStyle(e.target);
         info4.update();
 	}
-
 	function zoomToFeature4(e) {
 		map.fitBounds(e.target.getBounds());
 	}
-
 	var geojson4 = L.geoJson(wlkLrg, {
 		style: style4,
 		onEachFeature: onEachFeature4
 	   }); 
-       
-//layer control
+//geojson5 functions------------------                
+   var geojson5 = L.geoJson(cityLimits, {
+style: style5,
+
+});   
+                
+//layer control--------------------------------------
 		var baseMaps = {
             "OpenStreetMap": OSM,
             "Esri World Imagery": Esri_WorldImagery,
             "Topographic Map": Esri_Topo
-        };
-        
+        };   
         var overlayMaps = {
 			"Parks more likely to have litter?": geojson1,
             "Parks for Social Distancing":geojson2,
              "Walking Times to All Parks":geojson3,
-             "Walking Times to Large Parks":geojson4
-        };
-        
+             "Walking Times to Large Parks":geojson4,
+            "Walking Times to Medium Parks":geojson6,
+            "Walking Times to Small Parks":geojson7,
+            "Des Moines City Limits":geojson5
+        };    
      L.control.layers(baseMaps, overlayMaps).addTo(map);
-     
+//End layer control----------------------------------     
+//geojson6 functions---------------
+	function highlightFeature6(e) {
+		var layer = e.target;
+        info6.update(layer.feature.properties);
+		layer.setStyle({
+			weight: 2,
+			color: 'black',
+			dashArray: '',
+			fillOpacity: 0.7,
+		});
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+	}            
+	function resetHighlight6(e) {
+		geojson6.resetStyle(e.target);
+        info6.update();
+	}
+	function zoomToFeature6(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+	var geojson6 = L.geoJson(wlkMed, {
+		style: style6,
+		onEachFeature: onEachFeature6
+	   }); 
+
+//geojson7 functions---------------
+	function highlightFeature7(e) {
+		var layer = e.target;
+        info7.update(layer.feature.properties);
+		layer.setStyle({
+			weight: 2,
+			color: 'black',
+			dashArray: '',
+			fillOpacity: 0.7,
+		});
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+	}            
+	function resetHighlight7(e) {
+		geojson7.resetStyle(e.target);
+        info7.update();
+	}
+	function zoomToFeature7(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+	var geojson7 = L.geoJson(wlkMed, {
+		style: style7,
+		onEachFeature: onEachFeature7
+	   });                 
 //ON/OFF Control for legend1
  map.on('overlayremove', function (eventLayer) {
 	console.log(eventLayer.name  + " off");
@@ -583,7 +795,7 @@ map.on('overlayadd', function (eventLayer2) {
 	}	
 }); 
 //End ON/OFF control2-----------   
-//ON/OFF Control for legend3
+/*//ON/OFF Control for legend3
  map.on('overlayremove', function (eventLayer3) {
 	console.log(eventLayer3.name  + " off");
 	if (eventLayer3.name == "Walking Times to All Parks") {
@@ -601,6 +813,7 @@ map.on('overlayadd', function (eventLayer3) {
 		 legend.addTo(this);
 	}	
 }); 
+*/
                 /*
 //ON/OFF control4-----------                 
 	console.log(eventLayer4.name  + " off");
@@ -637,14 +850,10 @@ map.on('overlayadd', function (eventLayer4) {
         }
         function desMoines() {
             map.setView([41.579901, -93.616244 ], 12);
-        }
-    
-//------------------------------------------>                
-            </script>
-            
-            
-<!------Buttons below map------------------->            
-            
+        }   
+//------------------------------------------>            
+            </script>           
+<!------Buttons below map------------------->                       
  <button type="button"
 onclick="greenWood()">
 Zoom to Greenwood Park</button>
@@ -657,7 +866,7 @@ Zoom to Gray's Lake Park</button>
 <button type="button"
 onclick="papaJohn()">
 Zoom to Papajohn Sculpture Park</button>
-            <br>
+            
 <button type="button"
 onclick="desMoines()">
 Back to Des Moines</button>         
@@ -671,7 +880,7 @@ Back to Des Moines</button>
             
             <h2 style="color: #2e557a">Population Per Acre of Park</h2>
             <b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines <br> GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the<br> populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population<br> density of areas around a park is a good
-            start, but much more data is needed. Things like daily electronic monitoring of<br> pedestrians and on the ground visuals are great data to have as well.  
+            start, but much more data is needed. Things like daily electronic monitoring of<br> pedestrians and on the ground visuals are great data to have as well.  Also, considering most park users will want to use trails,<br> knowing the width and length of trails would be a much more focused form of analysis. 
             </b>
             
     <br>
@@ -706,7 +915,6 @@ Back to Des Moines</button>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise11/"> Leaflet Plugin  </a></li>
       <li><a target="_blank" href="https://jwthompson1982.github.io/CRP-458/exercise12/"> Walnut Woods State Park  </a></li>
         </ol>
-  
     </div>  
         </body>
 </html>
