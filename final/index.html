@@ -15,6 +15,9 @@
 
         crossorigin="">
         </script>
+<!--Fullscreen --> 
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
         
 <h1>Des Moines Parks Population Analysis</h1>
         
@@ -85,6 +88,9 @@
                 
 //Create map
         var map = L.map('map',{
+    fullscreenControl:{ 
+    pseudoFullscreen: false
+    },
     center: [41.579901, -93.616242],
     zoom: 11,
     layers: [OSM]        
