@@ -19,7 +19,7 @@
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
         <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
         
-<h1>Des Moines Parks Population Analysis</h1>
+        <h1><b>Des Moines Parks Population Analysis</b></h1>
         
 
 <!--GeoJsons-->        
@@ -63,10 +63,22 @@
     margin: 0 0 5px;
     color: #777;
 }
+            h2 {
+                text-align: center;
+            }         
+            p{
+                
+    margin-top:auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+    margin-left: 5px; 
+    text-align:center;           
+
+            }            
         </style>
         
     </head>
-        <body>
+        <body style="background-color: beige">
             <div id="map"></div>
        <link  rel="stylesheet" type="text/css" href="https://jwthompson1982.github.io/CRP-458/final/css.css">    
             <script>
@@ -930,7 +942,8 @@ map.on('overlayadd', function (eventLayer4) {
         function desMoines() {
             map.setView([41.579901, -93.616244 ], 12);
         }   
-//------------------------------------------>            
+//------------------------------------------> 
+                
             </script>           
 <!------Buttons below map------------------->                       
  <button type="button"
@@ -952,20 +965,33 @@ Back to Des Moines</button>
 <!--Copy from here to end of div to add nav to each page --> 
     <br>
 <!--Explination of layers -->
+            
             <h2 style="color: #238443">Population 1-Mile Around Parks</h2>
-       <b>The layer seen in green was developed using ARCGIS Online. I downloaded park and census shapefiles from <br><a target="_blank" href="https://www.dsm.city/city_of_des_moines_gis_data/index.php">The City of Des Moines GIS webpage</a>.  I then summarized the population of census blocks within one mile around all<br> of the parks using the tool "Summarize nearby".  This process generated population data that I used to make a<br> choropleth map.  I converted this layer into a GEOJSON file which is visualized above as the "Parks more likely<br> to have more litter?" layer.  I added a question mark to show this is simply a question, and areas with higher <br>populations aren't always going to have more litter issues. Although population near a park is a proper consideration <br>for predicting litter, more factors go into this.   
-            </b>
+       <p><b>The layer seen in green was developed using ARCGIS Online. I downloaded park and census shapefiles from <a target="_blank" href="https://www.dsm.city/city_of_des_moines_gis_data/index.php">The City of Des Moines GIS webpage</a>.  I then summarized the population of census blocks within one mile around all of the parks using the tool "Summarize nearby".  This process generated population data that I used to make a choropleth map.  I converted this layer into a GEOJSON file which is visualized above as the "Parks more likely to have more litter?" layer.  I added a question mark to show this is simply a question, and areas with higher populations aren't always going to have more litter issues. Although population near a park is a proper consideration for predicting litter, more factors go into this.   
+            </b></p>
             <br>
             
             <h2 style="color: #2e557a">Population Per Acre of Park</h2>
-            <b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines <br> GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the<br> populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population<br> density of areas around a park is a good
-            start, but much more data is needed. Things like daily electronic monitoring of<br> pedestrians and on the ground visuals are great data to have as well.  Also, considering most park users will want to use trails,<br> knowing the width and length of trails would be a much more focused form of analysis. 
-            </b>
+            <p><b>The layer seen in blue was also developed using ARCGIS Online, as well as the same data from The City of Des Moines  GIS webpage.  I used the first layer I created summarizing population within a mile of each park and simply divided the populations by the acres of the parks.  I named this layer "Parks for social distancing".  Knowing the potential population density of areas around a park is a good
+            start, but much more data is needed. Things like daily electronic monitoring of pedestrians and on the ground visuals are great data to have as well.  Also, considering most park users will want to use trails, knowing the width and length of trails would be a much more focused form of analysis.  
+                </b></p>
             
     <br>
     <br>        
-<!--//Second map <div id="map2"></div> -->
+          <h2 style="color: green"> Walking Times to parks</h2>
+            <p><b>Finding the walking times to all of the Parks in Des Moines was simple.  First, I processed all of the centroid points from each park polygon.  I had to do this because ArcGIS Online cannot run drive-time analysis with a polygon.  It must be a point. After developing this layer I quickly realized there were too many polygons mashed together to be easily read.  To fix this, I seperated all of the parks into three categories based on size; Large parks are greater than 100 acres, medium parks are 25 - 50 acres, and small parks are less than 25 acres. Click <a target="_blank" href="images/parkSizes.JPG">here</a> to see more explination on park sizes.</b></p>
+            <h2>Images of Parks in and Around Des Moines</h2>
+            <p>
+            <li><a target="_blank" href="images/graysLake.jpg">Gray's Lake</a></li>
+            <li><a target="_blank" href="images/macRae.jpg">Mac Rae</a></li>
+            <li><a target="_blank" href="images/maffitt.jpg">Maffitt Reservior</a></li>
+            <li><a target="_blank" href="images/pearson.jpg">Pearson</a></li>
+            <li><a target="_blank" href="images/walnutWoods.jpg">Walnut Woods State Park</a></li>
+            <li><a target="_blank" href="images/woodlandCem.jpg">Woodland Cemetery</a></li></p>
+            
+    
             <br>
+            
             <br>
             <br>
 <!--Homepage-->
