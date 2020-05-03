@@ -37,6 +37,9 @@
         <script src="geojson_directory/Walk_time_small_parks.geojson">
                       //wlkSml
         </script>
+        <script src="geojson_directory/Central_Iowa_Parks.geojson">
+                      //parksIA
+        </script>
         
 <!--Map-->
         <style>
@@ -125,7 +128,12 @@ onEachFeature: onEachFeature6,
 var geojson7 = L.geoJson(wlkSml, {
 style: style7,
 onEachFeature: onEachFeature7,
-});                         
+});      
+
+var geojson8 = L.geoJson(parksIA, {
+style: style8,
+onEachFeature: onEachFeature8,
+}).addTo(map);                      
 // style function for geojson1             
 	function style(feature) {
 		return {
@@ -195,7 +203,17 @@ onEachFeature: onEachFeature7,
 			fillOpacity: 1,
 			fillColor: getColor7(feature7.properties.ToBreak)
 		};
-	}                                    
+	}      
+// style function for geojson8
+    function style8(feature8) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: 'black',
+			fillOpacity: 0.25,
+			fillColor: '#a1d99b'
+		};
+	}                              
 // color function for geojson1    
 function getColor(d) {
   return    d > 27999 ? '#238443' :
@@ -244,7 +262,8 @@ function getColor7(d) {
 				d > 4  ? 'green' :
 				'#e6eecf';//black = <0.01
 	}  
-                                          
+// color function for geojson8               
+                                                                 
 // on each feature function for geojson1     
 function onEachFeature(feature, layer) {
 		layer.on({
@@ -296,7 +315,15 @@ function onEachFeature7(feature, layer) {
 			mouseout: resetHighlight7,
 			click: zoomToFeature
 		});
-	}                       
+	} 
+// on each feature function for geojson8         
+function onEachFeature8(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature8,
+			mouseout: resetHighlight8,
+			click: zoomToFeature
+		});
+	}                
     
 //Geojson1 functions-------------------
 	function highlightFeature(e) { //info.update(layer.feature.properties);
@@ -424,7 +451,7 @@ info6.update = function (props) {
 
 info6.addTo(map);                
 // end hover box5--------------------------   
-// hover box6-----------------------------       
+// hover box7-----------------------------       
                                 
 var info7 = L.control({
      position: 'bottomright'
@@ -443,7 +470,27 @@ info7.update = function (props) {
 };
 
 info7.addTo(map);                
-// end hover box5--------------------------                   
+// end hover box7-------------------------- 
+// hover box8-----------------------------       
+                                
+var info8 = L.control({
+     position: 'topleft'
+});
+
+info8.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+// method that we will use to update the control based on feature properties passed
+info8.update = function (props) {
+    this._div.innerHTML = '<h4>Central Iowa Parks</h4>' +  (props ?
+        '<b>' + props.Name + '</b><br />' + Math.round(props.Acres) + ' Acres '
+        : 'Hover over a park');
+};
+
+info8.addTo(map);                
+// end hover box8--------------------------                 
 //Create Legend for litter layer---------------
 var legend = L.control({
   position: 'bottomleft'
@@ -594,12 +641,13 @@ for (var i = 0; i < ToBreak.length; i++) {
   return div;
 };   
 //legend7.addTo(map);
-//End Med walking legend--------------------                  
+//End sml walking legend-------------------- 
+                
 	var geojson1 = L.geoJson(parkPop, {
 		style: style,
 		onEachFeature: onEachFeature,
            
-   }).addTo(map);
+   });
                                  
 //End Pop near parks---------------
  
@@ -701,6 +749,7 @@ style: style5,
              "Walking Times to Large Parks":geojson4,
             "Walking Times to Medium Parks":geojson6,
             "Walking Times to Small Parks":geojson7,
+            "Central Iowa Parks":geojson8,
             "Des Moines City Limits":geojson5
         };    
      L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -755,7 +804,32 @@ style: style5,
 	var geojson7 = L.geoJson(wlkMed, {
 		style: style7,
 		onEachFeature: onEachFeature7
-	   });                 
+	   }); 
+//geojson8 functions---------------
+	function highlightFeature8(e) {
+		var layer = e.target;
+        info8.update(layer.feature.properties);
+		layer.setStyle({
+			weight: 2,
+			color: 'black',
+			dashArray: '',
+			fillOpacity: 0.5,
+		});
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+	}            
+	function resetHighlight8(e) {
+		geojson8.resetStyle(e.target);
+        info8.update();
+	}
+	function zoomToFeature8(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+	var geojson8 = L.geoJson(parksIA, {
+		style: style8,
+		onEachFeature: onEachFeature8
+	   });                                 
 //ON/OFF Control for legend1
  map.on('overlayremove', function (eventLayer) {
 	console.log(eventLayer.name  + " off");
