@@ -18,8 +18,7 @@
         
 <h1>Des Moines Parks Population Analysis</h1>
         
-<!--Homepage-->
-        <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a>
+
 <!--GeoJsons-->        
         <script src="geojson_directory/Des_Moines_Parks_1mile_Pop.geojson">//parkPop
         </script>
@@ -66,7 +65,7 @@
     </head>
         <body>
             <div id="map"></div>
-       <link  rel="stylesheet" type="text/css" href="https://jwthompson1982.github.io/CRP-458/final/css.css">     
+       <link  rel="stylesheet" type="text/css" href="https://jwthompson1982.github.io/CRP-458/final/css.css">    
             <script>
                 
             
@@ -88,7 +87,7 @@
         var map = L.map('map',{
     center: [41.579901, -93.616242],
     zoom: 11,
-    layers: [OSM]
+    layers: [OSM]        
     });
                 
   var geojson1 = L.geoJson(parkPop, {
@@ -963,7 +962,8 @@ Back to Des Moines</button>
             <br>
             <br>
             <br>
-            
+<!--Homepage-->
+        <a style="color: Black" href="https://jwthompson1982.github.io/CRP-458/">Return to Homepage</a> <br><br>            
     <script src="java.js"></script>
 <a style="color: " href="javascript:void(0)" class="openbtn" onclick="openNav()">Links to Class Exercises</a> 
     
